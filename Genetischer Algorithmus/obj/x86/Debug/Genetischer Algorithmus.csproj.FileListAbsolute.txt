@@ -13,3 +13,16 @@ d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\G
 d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.pdb
 L:\Benutzer\David\Documents\Visual Studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.exe
 L:\Benutzer\David\Documents\Visual Studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.pdb
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\bin\Debug\Genetischer Algorithmus.exe
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\bin\Debug\Genetischer Algorithmus.pdb
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\ResolveAssemblyReference.cache
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\MainWindow.baml
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\MainWindow.g.cs
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\App.g.cs
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus_MarkupCompile.cache
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.g.resources
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer_Algorithmus.Properties.Resources.resources
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\GenerateResource.read.1.tlog
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\GenerateResource.write.1.tlog
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.exe
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.pdb

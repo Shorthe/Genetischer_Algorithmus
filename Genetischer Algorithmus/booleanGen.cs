@@ -23,7 +23,7 @@ namespace Genetischer_Algorithmus
 
             for (int i = 0; i < size; i++)
             {
-                sequence[i] = random.Next(2);
+                sequence.Add(random.Next(2));
                 //sequence.Add(UsefulFunctions.GenerateRandomNumber(0, 2));
             }
         }
