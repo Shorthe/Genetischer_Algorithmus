@@ -66,6 +66,7 @@
     <Compile Include="booleanGen.cs" />
     <Compile Include="decimalGen.cs" />
     <Compile Include="Gen.cs" />
+    <Compile Include="GlobalSettings.cs" />
     <Compile Include="MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>

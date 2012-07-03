@@ -12,7 +12,7 @@ namespace Genetischer_Algorithmus
         private static double gu;
         private static double go;
 	    private static double decimalFactor = 1;
-        private Random random = new Random();
+        private static Random random = new Random();
 
         public booleanGen()
         {
@@ -24,7 +24,6 @@ namespace Genetischer_Algorithmus
             for (int i = 0; i < size; i++)
             {
                 sequence.Add(random.Next(2));
-                //sequence.Add(UsefulFunctions.GenerateRandomNumber(0, 2));
             }
         }
 

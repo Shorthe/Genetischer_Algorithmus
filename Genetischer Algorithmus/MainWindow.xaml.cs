@@ -14,16 +14,15 @@ using System.Windows.Shapes;
 
 namespace Genetischer_Algorithmus
 {
-    public partial class MainWindow : Window
+    public partial class MainWindow : Window    
     {
         public MainWindow()
         {
             InitializeComponent();
-            Random r = new Random();
+            
             for (int i = 0; i < 10; i++)
             {
-                System.Console.WriteLine(1 + ": " + new booleanGen().getValue());
-                System.Console.WriteLine("************************************************************");
+                new booleanGen().getValue();
             }
         }
 
@@ -33,6 +32,14 @@ namespace Genetischer_Algorithmus
                 return new booleanGen();
             else
                 return new decimalGen();
+        }
+
+        private void button1_Click(object sender, RoutedEventArgs e)
+        {
+            GlobalSettings.Generationen = int.Parse(tbGenerationen.Text);
+            GlobalSettings.Mutationsrate = int.Parse(tbMutationen.Text);
+            GlobalSettings.Rekombinationsrate = int.Parse(tbRekombinationen.Text);
+            GlobalSettings.Mutationsverringerung = (int) slider1.Value;
         }
     }
 }
