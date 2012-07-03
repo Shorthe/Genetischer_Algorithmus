@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 11.00
+# Visual Studio 2010
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genetischer Algorithmus", "Genetischer Algorithmus\Genetischer Algorithmus.csproj", "{5CDDA2D0-C2B6-4486-9DB4-D2A7252ABE75}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenAlgorithmus", "..\GenAlgorithmus\GenAlgorithmus\GenAlgorithmus.csproj", "{2F5D40C6-D1B3-4C91-8B8F-4F4A5288532D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|x86 = Debug|x86
+		Release|x86 = Release|x86
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5CDDA2D0-C2B6-4486-9DB4-D2A7252ABE75}.Debug|x86.ActiveCfg = Debug|x86
+		{5CDDA2D0-C2B6-4486-9DB4-D2A7252ABE75}.Debug|x86.Build.0 = Debug|x86
+		{5CDDA2D0-C2B6-4486-9DB4-D2A7252ABE75}.Release|x86.ActiveCfg = Release|x86
+		{5CDDA2D0-C2B6-4486-9DB4-D2A7252ABE75}.Release|x86.Build.0 = Release|x86
+		{2F5D40C6-D1B3-4C91-8B8F-4F4A5288532D}.Debug|x86.ActiveCfg = Debug|x86
+		{2F5D40C6-D1B3-4C91-8B8F-4F4A5288532D}.Debug|x86.Build.0 = Debug|x86
+		{2F5D40C6-D1B3-4C91-8B8F-4F4A5288532D}.Release|x86.ActiveCfg = Release|x86
+		{2F5D40C6-D1B3-4C91-8B8F-4F4A5288532D}.Release|x86.Build.0 = Release|x86
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

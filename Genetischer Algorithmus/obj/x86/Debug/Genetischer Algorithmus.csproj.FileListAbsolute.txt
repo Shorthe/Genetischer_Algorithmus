@@ -1,0 +1,15 @@
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\bin\Debug\Genetischer Algorithmus.exe
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\bin\Debug\Genetischer Algorithmus.pdb
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\ResolveAssemblyReference.cache
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\MainWindow.baml
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\MainWindow.g.cs
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\App.g.cs
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus_MarkupCompile.cache
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.g.resources
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer_Algorithmus.Properties.Resources.resources
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\GenerateResource.read.1.tlog
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\GenerateResource.write.1.tlog
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.exe
+d:\users\shorthe\documents\visual studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.pdb
+L:\Benutzer\David\Documents\Visual Studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.exe
+L:\Benutzer\David\Documents\Visual Studio 2010\Projects\Genetischer Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.pdb
