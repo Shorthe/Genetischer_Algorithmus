@@ -14,9 +14,6 @@ using System.Windows.Shapes;
 
 namespace Genetischer_Algorithmus
 {
-    /// <summary>
-    /// Interaktionslogik für MainWindow.xaml
-    /// </summary>
     public partial class MainWindow : Window
     {
         public MainWindow()
