@@ -3,23 +3,21 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace Genetischer_Algorithmus
+namespace Genetic_Algorithm
 {
-    class booleanGen : Gen
+    class BooleanGen : IGen
     {
         private static int size = 8;
 	    private List<int> sequence;
-        private static double gu;
-        private static double go;
+        private static double lowerBound;
+        private static double upperBound;
 	    private static double decimalFactor = 1;
         private static Random random = new Random();
 
-        public booleanGen()
+        public BooleanGen()
         {
             setIntervalBounds(-100, 100);
             sequence = new List<int>();
-
-            System.Console.WriteLine("BooleanGen");
 
             for (int i = 0; i < size; i++)
             {
@@ -27,7 +25,7 @@ namespace Genetischer_Algorithmus
             }
         }
 
-        public new double getValue()
+        public double getValue()
         {
             double sum = 0;
 
@@ -35,7 +33,7 @@ namespace Genetischer_Algorithmus
             {
                 sum += sequence[size - j - 1] * Math.Pow(2, j);
             }
-            return gu + decimalFactor * sum;
+            return lowerBound + decimalFactor * sum;
         }
 
 	    public static void setSize(int value)
@@ -48,12 +46,12 @@ namespace Genetischer_Algorithmus
 	    {
 		    return size;
 	    }
-		    
-        public static void setIntervalBounds(double aGu, double aGo)
+
+        public static void setIntervalBounds(double aLowerBound, double aUpperBound)
         {
-            gu = aGu;
-            go = aGo;
-            decimalFactor = (go - gu) / (Math.Pow(2, size) - 1);
+            lowerBound = aLowerBound;
+            upperBound = aUpperBound;
+            decimalFactor = (upperBound - lowerBound) / (Math.Pow(2, size) - 1);
         }
     }
 }

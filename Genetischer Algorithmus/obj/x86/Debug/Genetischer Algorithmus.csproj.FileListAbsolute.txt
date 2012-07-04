@@ -21,8 +21,8 @@ L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithm
 L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\App.g.cs
 L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus_MarkupCompile.cache
 L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.g.resources
-L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer_Algorithmus.Properties.Resources.resources
 L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\GenerateResource.read.1.tlog
 L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\GenerateResource.write.1.tlog
 L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.exe
 L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetischer Algorithmus.pdb
+L:\Benutzer\David\Documents\GitHub\Genetischer_Algorithmus\Genetischer Algorithmus\obj\x86\Debug\Genetic_Algorithm.Properties.Resources.resources
