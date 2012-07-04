@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genetischer Algorithmus", "Genetischer Algorithmus\Genetischer Algorithmus.csproj", "{5CDDA2D0-C2B6-4486-9DB4-D2A7252ABE75}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Genetic Algorithm", "Genetischer Algorithmus\Genetic Algorithm.csproj", "{5CDDA2D0-C2B6-4486-9DB4-D2A7252ABE75}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "GenAlgorithmus", "..\GenAlgorithmus\GenAlgorithmus\GenAlgorithmus.csproj", "{2F5D40C6-D1B3-4C91-8B8F-4F4A5288532D}"
 EndProject

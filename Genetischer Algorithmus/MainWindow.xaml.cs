@@ -12,8 +12,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 
-namespace Genetischer_Algorithmus
-{
+namespace Genetic_Algorithm
+{    
     public partial class MainWindow : Window    
     {
         public MainWindow()
@@ -22,24 +22,24 @@ namespace Genetischer_Algorithmus
             
             for (int i = 0; i < 10; i++)
             {
-                new booleanGen().getValue();
+                new BooleanGen().getValue();
             }
-        }
-
-        private Gen createGen(int genType)
-        {
-            if (genType == 1)
-                return new booleanGen();
-            else
-                return new decimalGen();
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            GlobalSettings.Generationen = int.Parse(tbGenerationen.Text);
-            GlobalSettings.Mutationsrate = int.Parse(tbMutationen.Text);
-            GlobalSettings.Rekombinationsrate = int.Parse(tbRekombinationen.Text);
-            GlobalSettings.Mutationsverringerung = (int) slider1.Value;
+            GlobalSettings.Generations = int.Parse(tbGenerationen.Text);
+            GlobalSettings.MutationRate = int.Parse(tbMutationen.Text);
+            GlobalSettings.RekombinationRate = int.Parse(tbRekombinationen.Text);
+            GlobalSettings.MutationDecrement = (int) slider1.Value;
+            GlobalSettings.VariableMutationRate = (bool) checkBox1.IsChecked;
+            BooleanGen.setIntervalBounds(double.Parse(tbLowerBound.Text), double.Parse(tbUpperBound.Text));
+
+            // ggf. umstellen auf enumeration
+            if (cbSystemOfEquation.SelectedIndex == 0)
+            {
+                new Algorithm().findSolution(new SystemsOfEquation.Standard_SoE());
+            }
         }
     }
 }
