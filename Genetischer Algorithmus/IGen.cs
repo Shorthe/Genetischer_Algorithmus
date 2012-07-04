@@ -5,8 +5,10 @@ using System.Text;
 
 namespace Genetic_Algorithm
 {
-    interface IGen
+    abstract class Gen
     {
-        double getValue();             
+        public abstract double getValue();
+        public abstract void recombine(Gen gen1, Gen gen2);
+        public abstract void mutate();
     }
 }

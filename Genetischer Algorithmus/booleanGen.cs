@@ -5,18 +5,17 @@ using System.Text;
 
 namespace Genetic_Algorithm
 {
-    class BooleanGen : IGen
+    class BooleanGen : Gen, ICloneable
     {
         private static int size = 8;
-	    private List<int> sequence;
+	    public List<int> sequence;
         private static double lowerBound;
         private static double upperBound;
 	    private static double decimalFactor = 1;
         private static Random random = new Random();
 
         public BooleanGen()
-        {
-            setIntervalBounds(-100, 100);
+        {            
             sequence = new List<int>();
 
             for (int i = 0; i < size; i++)
@@ -25,7 +24,7 @@ namespace Genetic_Algorithm
             }
         }
 
-        public double getValue()
+        public override double getValue()
         {
             double sum = 0;
 
@@ -36,15 +35,29 @@ namespace Genetic_Algorithm
             return lowerBound + decimalFactor * sum;
         }
 
+        public override void recombine(Gen gen1, Gen gen2)
+        {
+            int sequencePointer = random.Next(size);
+            if (sequencePointer > 0)
+            {
+                this.sequence.InsertRange(0, ((BooleanGen) gen1).sequence.GetRange(0, sequencePointer));
+            }
+            this.sequence.InsertRange(sequencePointer, ((BooleanGen) gen2).sequence.GetRange(sequencePointer, size - sequencePointer));
+        }
+
+        public override void mutate()
+        {
+            int sequencePointer = GlobalSettings.random.Next(size);
+            if (sequence[sequencePointer] == 0)
+                sequence[sequencePointer] = 1;
+            else
+                sequence[sequencePointer] = 0;
+        }
+
 	    public static void setSize(int value)
 	    {
 		    if(size == 0)
 			    size = value;		
-	    }
-	
-	    public static int getSize()
-	    {
-		    return size;
 	    }
 
         public static void setIntervalBounds(double aLowerBound, double aUpperBound)
@@ -52,6 +65,11 @@ namespace Genetic_Algorithm
             lowerBound = aLowerBound;
             upperBound = aUpperBound;
             decimalFactor = (upperBound - lowerBound) / (Math.Pow(2, size) - 1);
+        }
+
+        public object Clone()
+        {
+            return this.MemberwiseClone();
         }
     }
 }

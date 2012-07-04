@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Genetic_Algorithm 
 {
-    class DecimalGen : IGen
+    class DecimalGen : Gen
     {
         private double value;
         private static int size = 0;
@@ -17,9 +17,19 @@ namespace Genetic_Algorithm
             value = random.NextDouble();
         }
 
-        public double getValue()
+        public override double getValue()
         {
             return value;
+        }
+
+        public override void recombine(Gen gen1, Gen gen2)
+        {
+            throw new NotImplementedException();
+        }
+
+        public override void mutate()
+        {
+            throw new NotImplementedException();
         }
     }
 }

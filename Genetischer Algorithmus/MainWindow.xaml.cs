@@ -28,11 +28,11 @@ namespace Genetic_Algorithm
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
-            GlobalSettings.Generations = int.Parse(tbGenerationen.Text);
-            GlobalSettings.MutationRate = int.Parse(tbMutationen.Text);
-            GlobalSettings.RekombinationRate = int.Parse(tbRekombinationen.Text);
-            GlobalSettings.MutationDecrement = (int) slider1.Value;
-            GlobalSettings.VariableMutationRate = (bool) checkBox1.IsChecked;
+            GlobalSettings.Generations = int.Parse(tbGenerations.Text);
+            GlobalSettings.MutationsMin = int.Parse(tbMutationsMin.Text);
+            GlobalSettings.MutationsMax = int.Parse(tbMutationsMax.Text);
+            GlobalSettings.RekombinationRate = int.Parse(tbRecombinations.Text);
+            GlobalSettings.MutationRateType = cbMutationRate.SelectedIndex;
             BooleanGen.setIntervalBounds(double.Parse(tbLowerBound.Text), double.Parse(tbUpperBound.Text));
 
             // ggf. umstellen auf enumeration
