@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Genetic_Algorithm
 {
-    class BooleanGen : Gen, ICloneable
+    class BooleanGene : Gene, ICloneable
     {
         private static int size = 8;
 	    public List<int> sequence;
@@ -14,7 +14,7 @@ namespace Genetic_Algorithm
 	    private static double decimalFactor = 1;
         private static Random random = new Random();
 
-        public BooleanGen()
+        public BooleanGene()
         {            
             sequence = new List<int>();
 
@@ -35,14 +35,14 @@ namespace Genetic_Algorithm
             return lowerBound + decimalFactor * sum;
         }
 
-        public override void recombine(Gen gen1, Gen gen2)
+        public override void recombine(Gene gen1, Gene gen2)
         {
             int sequencePointer = random.Next(size);
             if (sequencePointer > 0)
             {
-                this.sequence.InsertRange(0, ((BooleanGen) gen1).sequence.GetRange(0, sequencePointer));
+                this.sequence.InsertRange(0, ((BooleanGene) gen1).sequence.GetRange(0, sequencePointer));
             }
-            this.sequence.InsertRange(sequencePointer, ((BooleanGen) gen2).sequence.GetRange(sequencePointer, size - sequencePointer));
+            this.sequence.InsertRange(sequencePointer, ((BooleanGene) gen2).sequence.GetRange(sequencePointer, size - sequencePointer));
         }
 
         public override void mutate()

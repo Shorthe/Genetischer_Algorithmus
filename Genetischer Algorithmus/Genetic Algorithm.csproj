@@ -66,9 +66,9 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BooleanGen.cs" />
-    <Compile Include="DecimalGen.cs" />
-    <Compile Include="IGen.cs" />
+    <Compile Include="BooleanGene.cs" />
+    <Compile Include="DecimalGene.cs" />
+    <Compile Include="IGene.cs" />
     <Compile Include="GlobalSettings.cs" />
     <Compile Include="Individual.cs" />
     <Compile Include="MainWindow.xaml.cs">

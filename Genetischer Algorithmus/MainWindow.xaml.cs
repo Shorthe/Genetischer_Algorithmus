@@ -22,7 +22,7 @@ namespace Genetic_Algorithm
             
             for (int i = 0; i < 10; i++)
             {
-                new BooleanGen().getValue();
+                new BooleanGene().getValue();
             }
         }
 
@@ -33,7 +33,7 @@ namespace Genetic_Algorithm
             GlobalSettings.MutationsMax = int.Parse(tbMutationsMax.Text);
             GlobalSettings.RekombinationRate = int.Parse(tbRecombinations.Text);
             GlobalSettings.MutationRateType = cbMutationRate.SelectedIndex;
-            BooleanGen.setIntervalBounds(double.Parse(tbLowerBound.Text), double.Parse(tbUpperBound.Text));
+            BooleanGene.setIntervalBounds(double.Parse(tbLowerBound.Text), double.Parse(tbUpperBound.Text));
 
             // ggf. umstellen auf enumeration
             if (cbSystemOfEquation.SelectedIndex == 0)

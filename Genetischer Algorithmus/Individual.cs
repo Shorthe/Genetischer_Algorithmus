@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Genetic_Algorithm
 {
-    class Individual : ICloneable
+    class Individual : ICloneable, IComparable
     {
-        public List<Gen> gens = new List<Gen>();
+        public List<Gene> gens = new List<Gene>();
         public double quality;
         
         public Individual()
@@ -18,12 +18,12 @@ namespace Genetic_Algorithm
             }
         }
 
-        private Gen createGen()
+        private Gene createGen()
         {
             if (GlobalSettings.GenType == 0)
-                return new BooleanGen();
+                return new BooleanGene();
             else
-                return new DecimalGen();
+                return new DecimalGene();
         }
 
         public override String ToString()
@@ -46,10 +46,20 @@ namespace Genetic_Algorithm
             int selectedGenPosition = GlobalSettings.random.Next(GlobalSettings.NumberOfGens);
             Individual child = new Individual();
             if (selectedGenPosition > 0)
+            {
+                child.gens.RemoveRange(0, selectedGenPosition);
                 child.gens.InsertRange(0, parent1.gens.GetRange(0, selectedGenPosition));
+            }
+
+
             child.gens[selectedGenPosition].recombine(parent1.gens[selectedGenPosition], parent2.gens[selectedGenPosition]);
-            if (parent2.gens.Count > selectedGenPosition)
-                child.gens.InsertRange(selectedGenPosition + 1, parent2.gens.GetRange(0, parent2.gens.Count - selectedGenPosition));
+
+            if (selectedGenPosition < parent2.gens.Count - 1 )
+            {
+                child.gens.RemoveRange(selectedGenPosition + 1, parent2.gens.Count - 1 - selectedGenPosition);
+                child.gens.InsertRange(selectedGenPosition + 1, parent2.gens.GetRange(selectedGenPosition + 1, parent2.gens.Count - 1 - selectedGenPosition));
+            }
+
             return child;
         }
 
@@ -64,13 +74,22 @@ namespace Genetic_Algorithm
             Individual newInd = (Individual) this.MemberwiseClone();
             if (GlobalSettings.GenType == 0)
             {
-                newInd.gens.Clear();
+                newInd.gens = new List<Gene>();
                 for (int i = 0; i < this.gens.Count; i++)
                 {
-                    newInd.gens.Add((Gen)(((BooleanGen)this.gens[i]).Clone()));
+                    newInd.gens.Add((Gene)(((BooleanGene)this.gens[i]).Clone()));
                 }
             }
             return newInd;
+        }
+
+        public int CompareTo(object obj)
+        {
+            if (((Individual)obj).quality < quality)
+                return 1;
+            else if (((Individual)obj).quality == quality)
+                return 0;
+            return -1;
         }
     }
 }

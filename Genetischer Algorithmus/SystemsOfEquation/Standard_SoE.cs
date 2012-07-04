@@ -19,8 +19,8 @@ namespace Genetic_Algorithm.SystemsOfEquation
         private double solveSystem(Individual ind)
         {
             double x1 = ind.gens[0].getValue();
-            double x2 = ind.gens[0].getValue();
-            double x3 = ind.gens[0].getValue();
+            double x2 = ind.gens[1].getValue();
+            double x3 = ind.gens[2].getValue();
 
             double z1 = Math.Pow(x1, 2) + 2 * Math.Pow(x2, 2) - 4;
             double z2 = Math.Pow(x1, 2) + Math.Pow(x2, 2) + x3 - 8;

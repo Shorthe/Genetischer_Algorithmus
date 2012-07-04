@@ -5,14 +5,14 @@ using System.Text;
 
 namespace Genetic_Algorithm 
 {
-    class DecimalGen : Gen
+    class DecimalGene : Gene
     {
         private double value;
         private static int size = 0;
         private static double decimalFactor;
         private static Random random = new Random();
 
-        public DecimalGen()
+        public DecimalGene()
         {
             value = random.NextDouble();
         }
@@ -22,7 +22,7 @@ namespace Genetic_Algorithm
             return value;
         }
 
-        public override void recombine(Gen gen1, Gen gen2)
+        public override void recombine(Gene gen1, Gene gen2)
         {
             throw new NotImplementedException();
         }
