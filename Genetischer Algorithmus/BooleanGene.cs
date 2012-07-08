@@ -69,7 +69,15 @@ namespace Genetic_Algorithm
 
         public object Clone()
         {
-            return this.MemberwiseClone();
+            BooleanGene gene = (BooleanGene)this.MemberwiseClone();
+            gene.sequence = new List<int>();
+
+            for(int i=0; i < this.sequence.Count; i++)
+            {
+                gene.sequence.Add(this.sequence[i]);
+            }
+
+            return gene;
         }
     }
 }

@@ -14,10 +14,6 @@ namespace Genetic_Algorithm
 
         public void findSolution(SystemOfEquation SoE)
         {
-            Individual ind1 = new Individual();
-            Individual ind2 = new Individual();
-            Individual child = Individual.recombine(ind1, ind2);
-
             oldPopulation = new List<Individual>();
             newPopulation = new List<Individual>();
             BestIndividuals = new List<Individual>();
@@ -34,16 +30,18 @@ namespace Genetic_Algorithm
 
                 for (int j = 0; j < newPopulation.Count; j++)
                 {
-                    newPopulation[j].quality = SoE.calculateFitness(newPopulation[j]);
+                    newPopulation[j].Quality = SoE.calculateFitness(newPopulation[j]);
                 }
 
                 newPopulation.Sort();
-                //for (int j = 0; j < newPopulation.Count; j++)
-                //{
-                //    System.Console.WriteLine(newPopulation[j].ToString());
-                //}
+                for (int j = 0; j < 10; j++)
+                {
+                    System.Console.WriteLine(newPopulation[j].ToString());
+                }
                 System.Console.WriteLine("Elemente newPopulation: " + newPopulation.Count);
 
+                //Alle Indiduen aus der neuen Population hinzufügen
+                //, sortieren und nur die besten 10 behalten
                 BestIndividuals.InsertRange(0, newPopulation.GetRange(0,10));
                 BestIndividuals.Sort();
 
@@ -52,8 +50,10 @@ namespace Genetic_Algorithm
                     BestIndividuals.RemoveAt(j);
                 }
 
+
                 oldPopulation.Clear();
-                oldPopulation.AddRange(newPopulation.GetRange(0, 10));
+                //oldPopulation.AddRange(newPopulation.GetRange(0, 10));
+                oldPopulation.AddRange(newPopulation);
                 newPopulation.Clear();
             }
 
@@ -74,10 +74,20 @@ namespace Genetic_Algorithm
             System.Console.WriteLine("Rekombiniere " + GlobalSettings.RekombinationRate + " mal.");
             for (int i = 0; i < GlobalSettings.RekombinationRate; i++)
             {
-                parent1 = oldPopulation[GlobalSettings.random.Next(oldPopulation.Count)];
-                parent2 = oldPopulation[GlobalSettings.random.Next(oldPopulation.Count)];
+                //vermeiden, dass sich gleiches Individuum rekombiniert, sonst entsteht ein Klon
+                do
+                {
+                    parent1 = oldPopulation[GlobalSettings.random.Next(oldPopulation.Count)];
+                    parent2 = oldPopulation[GlobalSettings.random.Next(oldPopulation.Count)];
+                } while(parent1 == parent2);
+
+                //Console.WriteLine("------------[");
+                //Console.WriteLine("Eltern1: " + parent1.ToString());
+                //Console.WriteLine("Eltern2: " + parent2.ToString());
 
                 newPopulation.Add(Individual.recombine(parent1, parent2));
+                //Console.WriteLine("Kind: " + newPopulation[newPopulation.Count-1].ToString());
+                //Console.WriteLine("]---------------");
             }
         }
 

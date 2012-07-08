@@ -8,7 +8,22 @@ namespace Genetic_Algorithm
     class Individual : ICloneable, IComparable
     {
         public List<Gene> gens = new List<Gene>();
-        public double quality;
+        private double quality;
+
+        public double Quality
+        {
+            get { return quality; }
+            set {
+                //if (quality != 0)
+                //{
+                //    Console.WriteLine("Güte hat sich geändert.\n" + this.ToString() + ", neuer Wert= " + value);
+                //    Console.WriteLine(SystemsOfEquation.Standard_SoE.solveSystem(this));
+                //    int i = 0;
+                //}
+                    
+                quality = value; 
+            }
+        }
         
         public Individual()
         {
@@ -36,14 +51,15 @@ namespace Genetic_Algorithm
                 if (i < gens.Count - 1)
                     result += ", ";
             }
-            result += ") ---> RESULT: " + quality;
+            result += ") ---> RESULT: " + Quality;
 
             return result;
         }
 
         public static Individual recombine(Individual parent1, Individual parent2)
         {
-            int selectedGenPosition = GlobalSettings.random.Next(GlobalSettings.NumberOfGens);
+            //vermeiden, dass niedrigstes oder höchstes Gen gewählt wird, weil sonst Klon eines Elternteils entsteht
+            int selectedGenPosition = GlobalSettings.random.Next(GlobalSettings.NumberOfGens-1) + 1;
             Individual child = new Individual();
             if (selectedGenPosition > 0)
             {
@@ -85,9 +101,9 @@ namespace Genetic_Algorithm
 
         public int CompareTo(object obj)
         {
-            if (((Individual)obj).quality < quality)
+            if (((Individual)obj).Quality < Quality)
                 return 1;
-            else if (((Individual)obj).quality == quality)
+            else if (((Individual)obj).Quality == Quality)
                 return 0;
             return -1;
         }
