@@ -55,6 +55,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Enums.cs" />
     <Compile Include="SystemOfEquation.cs" />
     <Compile Include="SystemsOfEquation\Standard_SoE.cs" />
     <Page Include="MainWindow.xaml">
@@ -66,7 +67,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Compile Include="BooleanGene.cs" />
+    <Compile Include="BinaryGene.cs" />
     <Compile Include="DecimalGene.cs" />
     <Compile Include="IGene.cs" />
     <Compile Include="GlobalSettings.cs" />
@@ -100,6 +101,7 @@
     </None>
     <AppDesigner Include="Properties\" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

@@ -10,6 +10,7 @@ namespace Genetic_Algorithm
         private List<Individual> oldPopulation;
         private List<Individual> newPopulation;
         private List<Individual> BestIndividuals;
+        private int currentGeneration;
 
 
         public void findSolution(SystemOfEquation SoE)
@@ -22,9 +23,9 @@ namespace Genetic_Algorithm
                 oldPopulation.Add(new Individual());
             }
 
-            for (int i = 0; i < GlobalSettings.Generations; i++)
+            for (currentGeneration = 0; currentGeneration < GlobalSettings.Generations; currentGeneration++)
             {
-                System.Console.WriteLine("Generation " + (i + 1));
+                System.Console.WriteLine("Generation " + (currentGeneration + 1));
                 recombine();
                 mutate();
 
@@ -34,11 +35,11 @@ namespace Genetic_Algorithm
                 }
 
                 newPopulation.Sort();
-                for (int j = 0; j < 10; j++)
-                {
-                    System.Console.WriteLine(newPopulation[j].ToString());
-                }
-                System.Console.WriteLine("Elemente newPopulation: " + newPopulation.Count);
+                //for (int j = 0; j < 10; j++)
+                //{
+                //    System.Console.WriteLine(newPopulation[j].ToString());
+                //}
+                //System.Console.WriteLine("Elemente newPopulation: " + newPopulation.Count);
 
                 //Alle Indiduen aus der neuen Population hinzufügen
                 //, sortieren und nur die besten 10 behalten
@@ -94,11 +95,13 @@ namespace Genetic_Algorithm
         private void mutate()
         {
             Individual ind;
-            for (int i = 0; i < GlobalSettings.MutationsMax; i++)
+            for (int i = 0; i < GlobalSettings.getCountOfMutations(currentGeneration) ; i++)
             {
                 ind = (Individual)oldPopulation[GlobalSettings.random.Next(oldPopulation.Count)].Clone();
                 newPopulation.Add(Individual.mutate(ind));
             }
+
+            Console.WriteLine("Mutationsrate: " + GlobalSettings.getCountOfMutations(currentGeneration));
         }
     }
 }

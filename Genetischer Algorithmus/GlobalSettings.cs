@@ -11,20 +11,26 @@ namespace Genetic_Algorithm
         private static int _mutationsMax;
         private static int _rekombinationRate;
         private static int _generations;
-        private static int _mutationRateType;
-        private static int _genType;
+        private static MutationRates _mutationRateType;
+        private static GeneTypes _genType;
         private static int _numberOfGens = 3;
+        private static double constantLinearMutation;
+        private static double constantExponentialMutation;
         public static Random random = new Random();
 
         public static int MutationsMin
         {
             get { return GlobalSettings._mutationsMin; }
-            set { GlobalSettings._mutationsMin = value; }
+            set { GlobalSettings._mutationsMin = value;
+                    calculateMutationsConstants();
+            }
         }
         public static int MutationsMax
         {
             get { return GlobalSettings._mutationsMax; }
-            set { GlobalSettings._mutationsMax = value; }
+            set { GlobalSettings._mutationsMax = value;
+                    calculateMutationsConstants();
+            }
         }
         public static int RekombinationRate
         {
@@ -34,14 +40,16 @@ namespace Genetic_Algorithm
         public static int Generations
         {
             get { return GlobalSettings._generations; }
-            set { GlobalSettings._generations = value; }
+            set { GlobalSettings._generations = value;
+                    calculateMutationsConstants();
+            }
         }       
-        public static int MutationRateType
+        public static MutationRates MutationRateType
         {
             get { return GlobalSettings._mutationRateType; }
             set { GlobalSettings._mutationRateType = value; }
         }
-        public static int GenType
+        public static GeneTypes GenType
         {
             get { return GlobalSettings._genType; }
             set { GlobalSettings._genType = value; }
@@ -52,21 +60,37 @@ namespace Genetic_Algorithm
             set { if (_numberOfGens == 0) GlobalSettings._numberOfGens = value; }
         }
 
-        public static int getCountOfMutations(int populationSize, int activeGeneration)
+
+        private static void calculateMutationsConstants()
         {
-            if (GlobalSettings.MutationRateType == 0) // konstant
+            constantLinearMutation = (double)(GlobalSettings.MutationsMax - GlobalSettings.MutationsMin) / GlobalSettings.Generations;
+            //constantExponentialMutation = (double)GlobalSettings.MutationsMin / (GlobalSettings.MutationsMax * GlobalSettings.Generations);
+            constantExponentialMutation = Math.Log((double)GlobalSettings.MutationsMin / GlobalSettings.MutationsMax) / GlobalSettings.Generations;
+        }
+
+        public static int getCountOfMutations(int activeGeneration)
+        {
+            if (GlobalSettings.MutationRateType == MutationRates.Constant)
             {
-                return populationSize * GlobalSettings.MutationsMax / 100;
+                return GlobalSettings.MutationsMax;
             }
-            else if (GlobalSettings.MutationRateType == 1) // linear
+            else if (GlobalSettings.MutationRateType == MutationRates.Linear)
             {
-                return GlobalSettings.MutationsMax - ((GlobalSettings.MutationsMax - GlobalSettings.MutationsMin) / GlobalSettings.Generations) * activeGeneration;
+                int value = (int)(GlobalSettings.MutationsMax - (constantLinearMutation * activeGeneration));
+
+                if (value < GlobalSettings.MutationsMin)
+                    return GlobalSettings.MutationsMin;
+                return value;
             }
-            else if (GlobalSettings.MutationRateType == 2) // exponentiell
+            else if (GlobalSettings.MutationRateType == MutationRates.Exponential)
             {
-                return (int) Math.Pow(GlobalSettings.MutationsMax, (GlobalSettings.MutationsMin / GlobalSettings.MutationsMax) * (activeGeneration / GlobalSettings.Generations));                    
+                int value = (int)(GlobalSettings.MutationsMax * Math.Pow(Math.E, constantExponentialMutation * activeGeneration));
+                
+                if (value < GlobalSettings.MutationsMin)
+                    return GlobalSettings.MutationsMin;
+                return value;
             }
-            else throw new Exception("Fehler bei Wahl der Mutationsrate. ( Mutationsrate = "+GlobalSettings.MutationRateType+" existiert nicht.)");
+            else throw new Exception("Fehler bei Wahl der Mutationsrate. ( Mutationsrate = " + GlobalSettings.MutationRateType + " existiert nicht.)");
         }
     }
 }

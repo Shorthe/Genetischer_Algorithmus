@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Genetic_Algorithm
 {
-    class BooleanGene : Gene, ICloneable
+    class BinaryGene : Gene, ICloneable
     {
         private static int size = 8;
 	    public List<int> sequence;
@@ -14,7 +14,7 @@ namespace Genetic_Algorithm
 	    private static double decimalFactor = 1;
         private static Random random = new Random();
 
-        public BooleanGene()
+        public BinaryGene()
         {            
             sequence = new List<int>();
 
@@ -40,9 +40,9 @@ namespace Genetic_Algorithm
             int sequencePointer = random.Next(size);
             if (sequencePointer > 0)
             {
-                this.sequence.InsertRange(0, ((BooleanGene) gen1).sequence.GetRange(0, sequencePointer));
+                this.sequence.InsertRange(0, ((BinaryGene) gen1).sequence.GetRange(0, sequencePointer));
             }
-            this.sequence.InsertRange(sequencePointer, ((BooleanGene) gen2).sequence.GetRange(sequencePointer, size - sequencePointer));
+            this.sequence.InsertRange(sequencePointer, ((BinaryGene) gen2).sequence.GetRange(sequencePointer, size - sequencePointer));
         }
 
         public override void mutate()
@@ -69,7 +69,7 @@ namespace Genetic_Algorithm
 
         public object Clone()
         {
-            BooleanGene gene = (BooleanGene)this.MemberwiseClone();
+            BinaryGene gene = (BinaryGene)this.MemberwiseClone();
             gene.sequence = new List<int>();
 
             for(int i=0; i < this.sequence.Count; i++)

@@ -36,7 +36,7 @@ namespace Genetic_Algorithm
         private Gene createGen()
         {
             if (GlobalSettings.GenType == 0)
-                return new BooleanGene();
+                return new BinaryGene();
             else
                 return new DecimalGene();
         }
@@ -49,7 +49,7 @@ namespace Genetic_Algorithm
             {
                 result += gens[i].getValue();
                 if (i < gens.Count - 1)
-                    result += ", ";
+                    result += "; ";
             }
             result += ") ---> RESULT: " + Quality;
 
@@ -93,7 +93,7 @@ namespace Genetic_Algorithm
                 newInd.gens = new List<Gene>();
                 for (int i = 0; i < this.gens.Count; i++)
                 {
-                    newInd.gens.Add((Gene)(((BooleanGene)this.gens[i]).Clone()));
+                    newInd.gens.Add((Gene)(((BinaryGene)this.gens[i]).Clone()));
                 }
             }
             return newInd;
