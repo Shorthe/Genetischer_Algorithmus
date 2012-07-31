@@ -18,9 +18,6 @@ namespace Genetic_Algorithm
         Decimal
     }
 
-    /// <summary>
-    /// Notwendig???
-    /// </summary>
     public enum SystemsOfEquotation
     {
         Default,

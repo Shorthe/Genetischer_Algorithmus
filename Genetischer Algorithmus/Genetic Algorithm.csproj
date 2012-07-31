@@ -58,6 +58,7 @@
     <Compile Include="Enums.cs" />
     <Compile Include="SystemOfEquation.cs" />
     <Compile Include="SystemsOfEquation\Standard_SoE.cs" />
+    <Compile Include="IndividualComparer.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

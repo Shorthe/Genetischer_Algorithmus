@@ -19,7 +19,6 @@ namespace Genetic_Algorithm
         public MainWindow()
         {
             InitializeComponent();
-            
             for (int i = 0; i < 10; i++)
             {
                 new BinaryGene().getValue();
@@ -27,11 +26,20 @@ namespace Genetic_Algorithm
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
-        {
+        {            
+            GlobalSettings.tbConsole = tbConsole;
+            GlobalSettings.tbConsole.Text = "Console: \n\r";
+
+            GlobalSettings.cvGraphs = cvGraphs;
+            GlobalSettings.cvGraphs.Children.Clear();
+            GlobalSettings.cvGraphs.Children.Add(GlobalSettings.plAverageOfGenerations);
+            GlobalSettings.cvGraphs.Children.Add(GlobalSettings.plBestOfGenerations);
+
             GlobalSettings.Generations = int.Parse(tbGenerations.Text);
             GlobalSettings.MutationsMin = int.Parse(tbMutationsMin.Text);
             GlobalSettings.MutationsMax = int.Parse(tbMutationsMax.Text);
             GlobalSettings.RekombinationRate = int.Parse(tbRecombinations.Text);
+            GlobalSettings.CountOfIndividuals = int.Parse(tbGenerationSize.Text);
             
             //Mutationsrate
             if (cbMutationRate.SelectedIndex == 0)
@@ -46,11 +54,12 @@ namespace Genetic_Algorithm
             //Gen Typ
             if (cbGenType.SelectedIndex == 0)
             {
-                BinaryGene.setIntervalBounds(double.Parse(tbLowerBound.Text), double.Parse(tbUpperBound.Text));
+                BinaryGene.setIntervalBounds(Math.Round(double.Parse(tbLowerBound.Text), 2), Math.Round(double.Parse(tbUpperBound.Text), 2));
                 GlobalSettings.GenType = GeneTypes.Binary;
             }
             else if (cbGenType.SelectedIndex == 1)
             {
+                DecimalGene.setIntervalBounds(Math.Round(double.Parse(tbLowerBound.Text), 2), Math.Round(double.Parse(tbUpperBound.Text), 2));
                 GlobalSettings.GenType = GeneTypes.Decimal;
             }
             else

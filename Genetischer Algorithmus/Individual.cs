@@ -2,17 +2,19 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Collections;
 
 namespace Genetic_Algorithm
 {
-    class Individual : ICloneable, IComparable
+    class Individual : ICloneable
     {
         public List<Gene> gens = new List<Gene>();
-        private double quality;
+        private double _quality;
+        private int _tournamentScore;
 
         public double Quality
         {
-            get { return quality; }
+            get { return _quality; }
             set {
                 //if (quality != 0)
                 //{
@@ -21,10 +23,16 @@ namespace Genetic_Algorithm
                 //    int i = 0;
                 //}
                     
-                quality = value; 
+                _quality = value; 
             }
         }
-        
+
+        public int TournamentScore
+        {
+            get { return _tournamentScore; }
+            set { _tournamentScore = value; }
+        }
+
         public Individual()
         {
             for (int i = 0; i < GlobalSettings.NumberOfGens; i++)
@@ -97,15 +105,6 @@ namespace Genetic_Algorithm
                 }
             }
             return newInd;
-        }
-
-        public int CompareTo(object obj)
-        {
-            if (((Individual)obj).Quality < Quality)
-                return 1;
-            else if (((Individual)obj).Quality == Quality)
-                return 0;
-            return -1;
         }
     }
 }

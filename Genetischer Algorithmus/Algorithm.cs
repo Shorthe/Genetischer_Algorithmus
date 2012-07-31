@@ -34,7 +34,7 @@ namespace Genetic_Algorithm
                     newPopulation[j].Quality = SoE.calculateFitness(newPopulation[j]);
                 }
 
-                newPopulation.Sort();
+                newPopulation.Sort(GlobalSettings.qualityComparer);
                 //for (int j = 0; j < 10; j++)
                 //{
                 //    System.Console.WriteLine(newPopulation[j].ToString());
@@ -44,7 +44,7 @@ namespace Genetic_Algorithm
                 //Alle Indiduen aus der neuen Population hinzufügen
                 //, sortieren und nur die besten 10 behalten
                 BestIndividuals.InsertRange(0, newPopulation.GetRange(0,10));
-                BestIndividuals.Sort();
+                BestIndividuals.Sort(GlobalSettings.qualityComparer);
 
                 for (int j = BestIndividuals.Count - 1; j > 10; j--)
                 {
@@ -103,5 +103,58 @@ namespace Genetic_Algorithm
 
             Console.WriteLine("Mutationsrate: " + GlobalSettings.getCountOfMutations(currentGeneration));
         }
+
+        private void selectFlatTournament()
+        {
+            oldPopulation.Clear();
+            Individual bestPlayer;
+            for (int i = 0; i < GlobalSettings.CountOfIndividuals; i++)
+            {
+                bestPlayer = newPopulation[GlobalSettings.random.Next(newPopulation.Count)];
+                for (int j = 0; j < GlobalSettings.MatchSize - 1; j++)
+                {
+                    Individual competitor = newPopulation[GlobalSettings.random.Next(newPopulation.Count)];
+                    if (bestPlayer.Quality > competitor.Quality)
+                        bestPlayer = competitor;
+                }
+                oldPopulation.Add(bestPlayer);
+            }
+        }
+
+        private void selectSteppedTournament()
+        {
+            for (int i = 0; i < newPopulation.Count; i++)
+                newPopulation[i].TournamentScore = 0;
+
+            for (int i = 0; i < newPopulation.Count; i++)
+            {
+                Individual player = newPopulation[i];
+                for (int j = 0; j < GlobalSettings.MatchSize; j++)
+                {
+                    Individual competitor = newPopulation[GlobalSettings.random.Next(newPopulation.Count)];
+                    if (player.Quality == competitor.Quality)
+                    {
+                        player.TournamentScore++;
+                        competitor.TournamentScore++;
+                    }
+                    else if (player.Quality < competitor.Quality)
+                        competitor.TournamentScore++;
+                    else
+                        player.TournamentScore++;
+                }
+            }
+            newPopulation.Sort(GlobalSettings.tournamentComparer);
+
+            oldPopulation.Clear();
+            oldPopulation.AddRange(newPopulation.GetRange(0, (int)Math.Min(newPopulation.Count, GlobalSettings.CountOfIndividuals)));
+
+        }
+
+        private void selectDeterministically()
+        {
+            oldPopulation.Sort(GlobalSettings.qualityComparer);
+            oldPopulation.RemoveRange((int)Math.Min(newPopulation.Count, GlobalSettings.CountOfIndividuals) + 1, oldPopulation.Count - 1);
+        }
+	
     }
 }

@@ -2,21 +2,34 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Controls;
+using System.Windows.Shapes;
+using System.Windows;
 
 namespace Genetic_Algorithm
 {
     class GlobalSettings
     {
+        public static TextBlock tbConsole;
+        public static Canvas cvGraphs;
+        public static Polyline plBestOfGenerations = new Polyline();
+        public static Polyline plAverageOfGenerations = new Polyline();
+
         private static int _mutationsMin;
         private static int _mutationsMax;
         private static int _rekombinationRate;
         private static int _generations;
+        private static int _matchSize;
+        private static int _countOfIndividuals;
+
         private static MutationRates _mutationRateType;
         private static GeneTypes _genType;
         private static int _numberOfGens = 3;
         private static double constantLinearMutation;
         private static double constantExponentialMutation;
         public static Random random = new Random();
+        public static QualityComparer qualityComparer = new QualityComparer();
+        public static TournamentComparer tournamentComparer = new TournamentComparer();        
 
         public static int MutationsMin
         {
@@ -59,7 +72,16 @@ namespace Genetic_Algorithm
             get { return GlobalSettings._numberOfGens; }
             set { if (_numberOfGens == 0) GlobalSettings._numberOfGens = value; }
         }
-
+        public static int MatchSize
+        {
+            get { return GlobalSettings._matchSize; }
+            set { GlobalSettings._matchSize = value; }
+        }
+        public static int CountOfIndividuals
+        {
+            get { return GlobalSettings._countOfIndividuals; }
+            set { GlobalSettings._countOfIndividuals = value; }
+        }
 
         private static void calculateMutationsConstants()
         {
@@ -91,6 +113,26 @@ namespace Genetic_Algorithm
                 return value;
             }
             else throw new Exception("Fehler bei Wahl der Mutationsrate. ( Mutationsrate = " + GlobalSettings.MutationRateType + " existiert nicht.)");
+        }
+
+        public static void ConsoleAppendText(String newText)
+        {
+            tbConsole.Text += newText + "\n";
+        }
+
+        public static void CanvasDrawGraph()
+        {
+            List<Point> lp = new List<Point>();
+            lp.Add(new Point(1, 1));
+            lp.Add(new Point(1, 12));
+            lp.Add(new Point(12, 1));
+            lp.Add(new Point(12, 12));
+            lp.Add(new Point(122, 12));
+            lp.Add(new Point(234, 43));
+            lp.Add(new Point(222, 222));
+            // *** Implementierung der Übergabe der Punktlisten an das Canvas noch ausstehend
+            //plBestOfGenerations.Points = lp.;
+            
         }
     }
 }

@@ -35,14 +35,14 @@ namespace Genetic_Algorithm
             return lowerBound + decimalFactor * sum;
         }
 
-        public override void recombine(Gene gen1, Gene gen2)
+        public override void recombine(Gene gene1, Gene gene2)
         {
             int sequencePointer = random.Next(size);
             if (sequencePointer > 0)
             {
-                this.sequence.InsertRange(0, ((BinaryGene) gen1).sequence.GetRange(0, sequencePointer));
+                this.sequence.InsertRange(0, ((BinaryGene) gene1).sequence.GetRange(0, sequencePointer));
             }
-            this.sequence.InsertRange(sequencePointer, ((BinaryGene) gen2).sequence.GetRange(sequencePointer, size - sequencePointer));
+            this.sequence.InsertRange(sequencePointer, ((BinaryGene) gene2).sequence.GetRange(sequencePointer, size - sequencePointer));
         }
 
         public override void mutate()
