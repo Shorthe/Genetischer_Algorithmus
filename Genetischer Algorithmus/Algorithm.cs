@@ -15,6 +15,8 @@ namespace Genetic_Algorithm
 
         public void findSolution(SystemOfEquation SoE)
         {
+            GlobalSettings.plBestOfGenerations.Points.Clear();
+
             oldPopulation = new List<Individual>();
             newPopulation = new List<Individual>();
             BestIndividuals = new List<Individual>();
@@ -40,21 +42,13 @@ namespace Genetic_Algorithm
                 //    System.Console.WriteLine(newPopulation[j].ToString());
                 //}
                 //System.Console.WriteLine("Elemente newPopulation: " + newPopulation.Count);
-
-                //Alle Indiduen aus der neuen Population hinzufügen
-                //, sortieren und nur die besten 10 behalten
-                BestIndividuals.InsertRange(0, newPopulation.GetRange(0,10));
-                BestIndividuals.Sort(GlobalSettings.qualityComparer);
-
-                for (int j = BestIndividuals.Count - 1; j > 10; j--)
-                {
-                    BestIndividuals.RemoveAt(j);
-                }
-
-
-                oldPopulation.Clear();
-                //oldPopulation.AddRange(newPopulation.GetRange(0, 10));
-                oldPopulation.AddRange(newPopulation);
+                
+                // die besten x Eltern behalten
+                if (oldPopulation.Count > GlobalSettings.Parents)
+                    oldPopulation.RemoveRange(GlobalSettings.Parents, oldPopulation.Count - GlobalSettings.Parents);
+                selectBySelectionMethod(GlobalSettings.SelectionMethod);
+                oldPopulation.Sort(GlobalSettings.qualityComparer);
+                GlobalSettings.AddBestOfGeneration(currentGeneration, oldPopulation[0]);
                 newPopulation.Clear();
             }
 
@@ -152,8 +146,18 @@ namespace Genetic_Algorithm
 
         private void selectDeterministically()
         {
-            oldPopulation.Sort(GlobalSettings.qualityComparer);
-            oldPopulation.RemoveRange((int)Math.Min(newPopulation.Count, GlobalSettings.CountOfIndividuals) + 1, oldPopulation.Count - 1);
+            newPopulation.Sort(GlobalSettings.qualityComparer);
+            oldPopulation.AddRange(newPopulation.GetRange(0, Math.Min(GlobalSettings.CountOfIndividuals, newPopulation.Count)));
+        }
+
+        private void selectBySelectionMethod(SelectionMethods selectionMethod)
+        {
+            switch (selectionMethod)
+            {
+                case SelectionMethods.deterministically : selectDeterministically(); break;
+                case SelectionMethods.flatTournament    : selectFlatTournament();    break;
+                case SelectionMethods.steppedTournament : selectSteppedTournament(); break;
+            }
         }
 	
     }

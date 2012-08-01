@@ -12,7 +12,7 @@
             <ComboBoxItem Content="decimal" />
         </ComboBox>
         <Button Content="Algorithmus ausführen" Height="23" HorizontalAlignment="Left" Margin="164,196,0,0" Name="button1" VerticalAlignment="Top" Width="153" Click="button1_Click" />
-        <TextBlock Height="256" HorizontalAlignment="Left" Margin="23,241,0,0" Name="tbConsole" Text="Console:" VerticalAlignment="Top" Width="412" UseLayoutRounding="False" TextWrapping="Wrap" TextTrimming="WordEllipsis" />
+        <TextBox Height="256" HorizontalAlignment="Left" Margin="23,241,0,0" Name="tbConsole" Text="Konsole:" VerticalAlignment="Top" Width="412" UseLayoutRounding="False" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
         <Canvas Height="256" HorizontalAlignment="Left" Margin="441,241,0,0" Name="cvGraphs" VerticalAlignment="Top" Width="293" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="143,108,0,0" Name="tbRecombinations" VerticalAlignment="Top" Width="39" Text="100" />
         <TextBox Height="23" HorizontalAlignment="Left" Margin="143,137,0,0" Name="tbMutationsMax" VerticalAlignment="Top" Width="39" Text="30" />
@@ -23,7 +23,7 @@
         <Label Content="Mutationen" Height="28" HorizontalAlignment="Left" Margin="12,135,0,0" Name="label5" VerticalAlignment="Top" Width="106" />
         <Label Content="Generationsgröße" Height="28" HorizontalAlignment="Left" Margin="12,77,0,0" Name="label9" VerticalAlignment="Top" Width="106" />        
         <Label Content="Gleichungssystem" Height="28" HorizontalAlignment="Left" Margin="473,101,0,0" Name="label6" VerticalAlignment="Top" Width="120" />
-        <ComboBox Height="23" HorizontalAlignment="Left" Margin="473,135,0,0" Name="cbSystemOfEquation" VerticalAlignment="Top" Width="120">
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="473,137,0,0" Name="cbSystemOfEquation" VerticalAlignment="Top" Width="120">
             <ComboBoxItem Content="Standard" IsSelected="True" />
             <ComboBoxItem Content="Griewank-Funktion" />
             <ComboBoxItem Content="Ackley-Funktion" />
@@ -37,6 +37,12 @@
             <ComboBoxItem Content="exponentiell" />
         </ComboBox>
         <TextBox Height="23" HorizontalAlignment="Left" Margin="87,137,0,0" Name="tbMutationsMin" Text="3" VerticalAlignment="Top" Width="39" />
-        <Label Content=" - " Height="28" HorizontalAlignment="Left" Margin="124,135,0,0" Name="label8" VerticalAlignment="Top" Width="19" />        
+        <Label Content=" - " Height="28" HorizontalAlignment="Left" Margin="124,135,0,0" Name="label8" VerticalAlignment="Top" Width="19" />
+        <Label Content="Selektionsverfahren" Height="28" HorizontalAlignment="Left" Margin="197,101,0,0" Name="label10" VerticalAlignment="Top" Width="120" />
+        <ComboBox Height="23" HorizontalAlignment="Left" Margin="197,137,0,0" Name="cbSelection" VerticalAlignment="Top" Width="120">
+            <ComboBoxItem Content="Deterministisch" IsSelected="True" />
+            <ComboBoxItem Content="Flaches Turnier" />
+            <ComboBoxItem Content="Stufen-Turnier" />
+        </ComboBox>
     </Grid>
 </Window>

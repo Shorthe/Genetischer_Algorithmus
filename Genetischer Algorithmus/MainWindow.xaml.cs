@@ -32,12 +32,14 @@ namespace Genetic_Algorithm
 
             GlobalSettings.cvGraphs = cvGraphs;
             GlobalSettings.cvGraphs.Children.Clear();
+            GlobalSettings.plBestOfGenerations.Stroke = Brushes.DarkGoldenrod;
+            GlobalSettings.plAverageOfGenerations.Stroke = Brushes.DarkRed;
             GlobalSettings.cvGraphs.Children.Add(GlobalSettings.plAverageOfGenerations);
             GlobalSettings.cvGraphs.Children.Add(GlobalSettings.plBestOfGenerations);
 
             GlobalSettings.Generations = int.Parse(tbGenerations.Text);
             GlobalSettings.MutationsMin = int.Parse(tbMutationsMin.Text);
-            GlobalSettings.MutationsMax = int.Parse(tbMutationsMax.Text);
+            GlobalSettings.MutationsMax = int.Parse(tbMutationsMax.Text);            
             GlobalSettings.RekombinationRate = int.Parse(tbRecombinations.Text);
             GlobalSettings.CountOfIndividuals = int.Parse(tbGenerationSize.Text);
             
@@ -50,6 +52,16 @@ namespace Genetic_Algorithm
                 GlobalSettings.MutationRateType = MutationRates.Exponential;
             else
                 throw new NotImplementedException("Die Mutationsrate " + cbMutationRate.SelectedValue + " wurde nicht implementiert!");
+
+            //Selektionsverfahren
+            if (cbSelection.SelectedIndex == 0)
+                GlobalSettings.SelectionMethod = SelectionMethods.deterministically;
+            else if (cbSelection.SelectedIndex == 1)
+                GlobalSettings.SelectionMethod = SelectionMethods.flatTournament;
+            else if (cbSelection.SelectedIndex == 2)
+                GlobalSettings.SelectionMethod = SelectionMethods.steppedTournament;
+            else
+                throw new NotImplementedException("Das Selektionsverfahren " + cbSelection.SelectedValue + " wurde nicht implementiert!");
 
             //Gen Typ
             if (cbGenType.SelectedIndex == 0)

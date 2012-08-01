@@ -5,12 +5,15 @@ using System.Text;
 using System.Windows.Controls;
 using System.Windows.Shapes;
 using System.Windows;
+using System.Windows.Media;
 
 namespace Genetic_Algorithm
 {
     class GlobalSettings
     {
-        public static TextBlock tbConsole;
+        private static int _parents = 10;
+
+        public static TextBox tbConsole;
         public static Canvas cvGraphs;
         public static Polyline plBestOfGenerations = new Polyline();
         public static Polyline plAverageOfGenerations = new Polyline();
@@ -25,12 +28,18 @@ namespace Genetic_Algorithm
         private static MutationRates _mutationRateType;
         private static GeneTypes _genType;
         private static int _numberOfGens = 3;
+        private static SelectionMethods _selectionMethod;
         private static double constantLinearMutation;
         private static double constantExponentialMutation;
         public static Random random = new Random();
         public static QualityComparer qualityComparer = new QualityComparer();
-        public static TournamentComparer tournamentComparer = new TournamentComparer();        
+        public static TournamentComparer tournamentComparer = new TournamentComparer();
 
+        public static int Parents
+        {
+            get { return _parents; }
+            set { _parents = value; }
+        }
         public static int MutationsMin
         {
             get { return GlobalSettings._mutationsMin; }
@@ -71,6 +80,11 @@ namespace Genetic_Algorithm
         {
             get { return GlobalSettings._numberOfGens; }
             set { if (_numberOfGens == 0) GlobalSettings._numberOfGens = value; }
+        }
+        public static SelectionMethods SelectionMethod
+        {
+            get { return GlobalSettings._selectionMethod; }
+            set { GlobalSettings._selectionMethod = value; }
         }
         public static int MatchSize
         {
@@ -118,21 +132,22 @@ namespace Genetic_Algorithm
         public static void ConsoleAppendText(String newText)
         {
             tbConsole.Text += newText + "\n";
+            tbConsole.ScrollToEnd();
+            mainWindow.
+        }
+        
+        public static void AddBestOfGeneration(int generation, Individual newBest)
+        {
+            ConsoleAppendText(generation+" - "+newBest.Quality);
+            plBestOfGenerations.Points.Add(new Point(generation, newBest.Quality / 10000));
+            cvGraphs.UpdateLayout();
+            cvGraphs.InvalidateArrange();
+            cvGraphs.InvalidateVisual();
         }
 
-        public static void CanvasDrawGraph()
+        public static void AddAverageOfGeneration(int generation, Individual newAverage)
         {
-            List<Point> lp = new List<Point>();
-            lp.Add(new Point(1, 1));
-            lp.Add(new Point(1, 12));
-            lp.Add(new Point(12, 1));
-            lp.Add(new Point(12, 12));
-            lp.Add(new Point(122, 12));
-            lp.Add(new Point(234, 43));
-            lp.Add(new Point(222, 222));
-            // *** Implementierung der Übergabe der Punktlisten an das Canvas noch ausstehend
-            //plBestOfGenerations.Points = lp.;
-            
+            plBestOfGenerations.Points.Add(new Point(generation, newAverage.Quality));
         }
     }
 }

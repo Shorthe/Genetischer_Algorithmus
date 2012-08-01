@@ -12,6 +12,13 @@ namespace Genetic_Algorithm
         Exponential
     }
 
+    public enum SelectionMethods
+    {
+        deterministically,
+        flatTournament,
+        steppedTournament
+    }
+
     public enum GeneTypes
     {
         Binary,
