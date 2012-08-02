@@ -148,27 +148,21 @@ namespace Genetic_Algorithm
 
         private static void DrawBestOfGeneration(List<double> best)
         {
-            double generationsFactor;
-            double qualityFactor;
+            double generationsFactor = 1 / best.Count * cvGraphs.Width;
+            double qualityFactor = 1 / BestOfAll * cvGraphs.Height; 
             for (int i = 0; i < best.Count; i++)
-            {
-                generationsFactor = i / best.Count * cvGraphs.Width;
-                qualityFactor = i / BestOfAll * cvGraphs.Height;
+            {                
                 ConsoleAppendText(i + " - " + best[i]);
-                plBestOfGenerations.Points.Add(new Point(i * generationsFactor, best[i] * qualityFactor));
+                plBestOfGenerations.Points.Add(new Point(i+1 * generationsFactor, cvGraphs.Height - best[i] * qualityFactor));
             }
         }
 
         private static void DrawAverageOfGeneration(List<double> averages)
         {
-            double generationsFactor;
-            double qualityFactor;
+            double generationsFactor = 1 / averages.Count * cvGraphs.Width;
+            double qualityFactor = 1 / BestOfAll * cvGraphs.Height;
             for (int i = 0; i < averages.Count; i++)
-            {
-                generationsFactor = i / averages.Count * cvGraphs.Width;
-                qualityFactor = i / BestOfAll * cvGraphs.Height;
-                plBestOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - averages[i] * qualityFactor));
-            }
+                plBestOfGenerations.Points.Add(new Point(i+1 * generationsFactor, cvGraphs.Height - averages[i] * qualityFactor));
         }
 
         public static void DrawGraphs(List<double> best, List<double> averages)
