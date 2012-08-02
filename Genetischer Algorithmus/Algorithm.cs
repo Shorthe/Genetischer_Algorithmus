@@ -11,11 +11,16 @@ namespace Genetic_Algorithm
         private List<Individual> newPopulation;
         private List<Individual> BestIndividuals;
         private int currentGeneration;
+        private List<double> bestOfGenerations;
+        private List<double> averagesOfGenerations;
 
 
         public void findSolution(SystemOfEquation SoE)
         {
             GlobalSettings.plBestOfGenerations.Points.Clear();
+
+            bestOfGenerations     = new List<Double>();
+            averagesOfGenerations = new List<Double>();
 
             oldPopulation = new List<Individual>();
             newPopulation = new List<Individual>();
@@ -48,10 +53,18 @@ namespace Genetic_Algorithm
                     oldPopulation.RemoveRange(GlobalSettings.Parents, oldPopulation.Count - GlobalSettings.Parents);
                 selectBySelectionMethod(GlobalSettings.SelectionMethod);
                 oldPopulation.Sort(GlobalSettings.qualityComparer);
-                GlobalSettings.AddBestOfGeneration(currentGeneration, oldPopulation[0]);
+                //GlobalSettings.ScaleGraphs(currentGeneration, oldPopulation[0]);
+
+                bestOfGenerations.Add(oldPopulation[0].Quality);
+                double sumOfQuality = 0;
+                for (int i = 0; i < oldPopulation.Count; i++)
+                    sumOfQuality += oldPopulation[i].Quality / 10000;
+                averagesOfGenerations.Add(sumOfQuality / oldPopulation.Count);
+                
                 newPopulation.Clear();
             }
 
+            GlobalSettings.DrawGraphs(bestOfGenerations, averagesOfGenerations);
 
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Beste Werte:");
