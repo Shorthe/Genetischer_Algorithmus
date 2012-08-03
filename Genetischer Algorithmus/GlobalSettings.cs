@@ -28,9 +28,7 @@ namespace Genetic_Algorithm
         private static int _matchSize;
         private static int _countOfIndividuals;
 
-        private static int MaxOfBestOfGenerations;
-        private static int MaxOfAverageOfGenerations;
-        private static double BestOfAll;
+        private static double HighestOfAll;
 
         private static MutationRates _mutationRateType;
         private static GeneTypes _geneType;
@@ -153,36 +151,35 @@ namespace Genetic_Algorithm
             TbConsole.ScrollToEnd();
         }
 
-        private static void findBestOfAll(List<double> best)
+        private static void findHighestOfAll(List<double> best)
         {
-            for (int i = 0; i < best.Count; i++)
-                if (best[i] > BestOfAll)
-                    BestOfAll = best[i];
+            HighestOfAll = best[0];
+            for (int i = 1; i < best.Count; i++)
+                if (best[i] > HighestOfAll)
+                    HighestOfAll = best[i];
         }
 
         private static void DrawBestOfGeneration(List<double> best)
         {
             double generationsFactor = cvGraphs.Width / (best.Count - 1);
-            double qualityFactor = cvGraphs.Height / BestOfAll; 
             for (int i = 0; i < best.Count; i++)
             {                
                 ConsoleAppendText(i + " | " + best[i]);
-                plBestOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - best[i] * qualityFactor));
+                plBestOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - cvGraphs.Height * best[i] / HighestOfAll));
             }
         }
 
         private static void DrawAverageOfGeneration(List<double> averages)
         {
             double generationsFactor = cvGraphs.Width / (averages.Count - 1);
-            double qualityFactor = cvGraphs.Height / BestOfAll;
 
             for (int i = 0; i < averages.Count; i++)
-                plBestOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - averages[i] * qualityFactor));
+                plAverageOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - Math.Min(cvGraphs.Height * averages[i] / HighestOfAll, cvGraphs.Height)));
         }
 
         public static void DrawGraphs(List<double> best, List<double> averages)
         {
-            findBestOfAll(best);
+            findHighestOfAll(best);
             DrawBestOfGeneration(best);
             DrawAverageOfGeneration(averages);
         }

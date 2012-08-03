@@ -18,6 +18,7 @@ namespace Genetic_Algorithm
         public void findSolution(SystemOfEquation SoE)
         {
             GlobalSettings.plBestOfGenerations.Points.Clear();
+            GlobalSettings.plAverageOfGenerations.Points.Clear();
 
             bestOfGenerations     = new List<Double>();
             averagesOfGenerations = new List<Double>();
@@ -56,7 +57,7 @@ namespace Genetic_Algorithm
                 bestOfGenerations.Add(oldPopulation[0].Quality);
                 double sumOfQuality = 0;
                 for (int i = 0; i < oldPopulation.Count; i++)
-                    sumOfQuality += oldPopulation[i].Quality / 10000;
+                    sumOfQuality += oldPopulation[i].Quality;
                 averagesOfGenerations.Add(sumOfQuality / oldPopulation.Count);
                 
                 newPopulation.Clear();
@@ -67,9 +68,7 @@ namespace Genetic_Algorithm
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Beste Werte:");
             for (int j = 0; j < BestIndividuals.Count; j++)
-            {
                 System.Console.WriteLine(BestIndividuals[j].ToString());
-            }
         }
 
         private void recombine()
