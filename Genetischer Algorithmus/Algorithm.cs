@@ -28,6 +28,7 @@ namespace Genetic_Algorithm
             for (int i = 0; i < GlobalSettings.RekombinationRate + GlobalSettings.MutationsMax; i++)
             {
                 oldPopulation.Add(new Individual());
+                oldPopulation[i].Quality = SoE.calculateFitness(oldPopulation[i]);
             }
 
             for (currentGeneration = 0; currentGeneration < GlobalSettings.Generations; currentGeneration++)
@@ -37,9 +38,7 @@ namespace Genetic_Algorithm
                 mutate();
 
                 for (int j = 0; j < newPopulation.Count; j++)
-                {
                     newPopulation[j].Quality = SoE.calculateFitness(newPopulation[j]);
-                }
 
                 newPopulation.Sort(GlobalSettings.qualityComparer);
                 //for (int j = 0; j < 10; j++)
@@ -49,12 +48,11 @@ namespace Genetic_Algorithm
                 //System.Console.WriteLine("Elemente newPopulation: " + newPopulation.Count);
                 
                 // die besten x Eltern behalten
+                oldPopulation.Sort(GlobalSettings.qualityComparer);
                 if (oldPopulation.Count > GlobalSettings.Parents)
                     oldPopulation.RemoveRange(GlobalSettings.Parents, oldPopulation.Count - GlobalSettings.Parents);
                 selectBySelectionMethod(GlobalSettings.SelectionMethod);
-                oldPopulation.Sort(GlobalSettings.qualityComparer);
-                //GlobalSettings.ScaleGraphs(currentGeneration, oldPopulation[0]);
-
+             
                 bestOfGenerations.Add(oldPopulation[0].Quality);
                 double sumOfQuality = 0;
                 for (int i = 0; i < oldPopulation.Count; i++)
@@ -171,6 +169,7 @@ namespace Genetic_Algorithm
                 case SelectionMethods.flatTournament    : selectFlatTournament();    break;
                 case SelectionMethods.steppedTournament : selectSteppedTournament(); break;
             }
+            oldPopulation.Sort(GlobalSettings.qualityComparer);
         }
 	
     }

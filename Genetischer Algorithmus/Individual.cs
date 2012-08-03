@@ -35,15 +35,15 @@ namespace Genetic_Algorithm
 
         public Individual()
         {
-            for (int i = 0; i < GlobalSettings.NumberOfGens; i++)
+            for (int i = 0; i < GlobalSettings.NumberOfGenes; i++)
             {
-                gens.Add(createGen());
+                gens.Add(createGene());
             }
         }
 
-        private Gene createGen()
+        private Gene createGene()
         {
-            if (GlobalSettings.GenType == 0)
+            if (GlobalSettings.GeneType == 0)
                 return new BinaryGene();
             else
                 return new DecimalGene();
@@ -67,7 +67,7 @@ namespace Genetic_Algorithm
         public static Individual recombine(Individual parent1, Individual parent2)
         {
             //vermeiden, dass niedrigstes oder höchstes Gen gewählt wird, weil sonst Klon eines Elternteils entsteht
-            int selectedGenPosition = GlobalSettings.random.Next(GlobalSettings.NumberOfGens-1) + 1;
+            int selectedGenPosition = GlobalSettings.random.Next(GlobalSettings.NumberOfGenes-1) + 1;
             Individual child = new Individual();
             if (selectedGenPosition > 0)
             {
@@ -96,7 +96,7 @@ namespace Genetic_Algorithm
         public object Clone()
         {
             Individual newInd = (Individual) this.MemberwiseClone();
-            if (GlobalSettings.GenType == 0)
+            if (GlobalSettings.GeneType == 0)
             {
                 newInd.gens = new List<Gene>();
                 for (int i = 0; i < this.gens.Count; i++)

@@ -21,7 +21,7 @@ namespace Genetic_Algorithm
     {
         public int Compare(Individual x, Individual y)
         {
-            if (x.Quality < y.Quality)
+            if (x.Quality > y.Quality)
                 return 1;
             else if (x.Quality == y.Quality)
                 return 0;

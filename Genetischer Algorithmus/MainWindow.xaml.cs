@@ -27,8 +27,8 @@ namespace Genetic_Algorithm
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {            
-            GlobalSettings.tbConsole = tbConsole;
-            GlobalSettings.tbConsole.Text = "Console: \n\r";
+            GlobalSettings.TbConsole = tbConsole;
+            GlobalSettings.TbConsole.Text = "";
 
             GlobalSettings.cvGraphs = cvGraphs;
             GlobalSettings.cvGraphs.Children.Clear();
@@ -67,12 +67,12 @@ namespace Genetic_Algorithm
             if (cbGenType.SelectedIndex == 0)
             {
                 BinaryGene.setIntervalBounds(Math.Round(double.Parse(tbLowerBound.Text), 2), Math.Round(double.Parse(tbUpperBound.Text), 2));
-                GlobalSettings.GenType = GeneTypes.Binary;
+                GlobalSettings.GeneType = GeneTypes.Binary;
             }
             else if (cbGenType.SelectedIndex == 1)
             {
                 DecimalGene.setIntervalBounds(Math.Round(double.Parse(tbLowerBound.Text), 2), Math.Round(double.Parse(tbUpperBound.Text), 2));
-                GlobalSettings.GenType = GeneTypes.Decimal;
+                GlobalSettings.GeneType = GeneTypes.Decimal;
             }
             else
             {

@@ -11,9 +11,12 @@ namespace Genetic_Algorithm
 {
     class GlobalSettings
     {
-        private static int _parents = 10;
+        private static int _parents = 4;
 
-        public static TextBox tbConsole;
+        private delegate void UpdateTbConsoleDelegate(System.Windows.DependencyProperty dp, Object value);
+        private static UpdateTbConsoleDelegate updateTbConsoleDelegate;
+        private static TextBox _tbConsole;
+
         public static Canvas cvGraphs;
         public static Polyline plBestOfGenerations = new Polyline();
         public static Polyline plAverageOfGenerations = new Polyline();
@@ -30,14 +33,22 @@ namespace Genetic_Algorithm
         private static double BestOfAll;
 
         private static MutationRates _mutationRateType;
-        private static GeneTypes _genType;
-        private static int _numberOfGens = 3;
+        private static GeneTypes _geneType;
+        private static int _numberOfGenes = 3;
         private static SelectionMethods _selectionMethod;
         private static double constantLinearMutation;
         private static double constantExponentialMutation;
         public static Random random = new Random();
         public static QualityComparer qualityComparer = new QualityComparer();
         public static TournamentComparer tournamentComparer = new TournamentComparer();
+
+        public static TextBox TbConsole
+        {
+            get { return GlobalSettings._tbConsole; }
+            set { GlobalSettings._tbConsole = value;
+                updateTbConsoleDelegate = new UpdateTbConsoleDelegate(_tbConsole.SetValue);
+            }
+        }
 
         public static int Parents
         {
@@ -75,15 +86,15 @@ namespace Genetic_Algorithm
             get { return GlobalSettings._mutationRateType; }
             set { GlobalSettings._mutationRateType = value; }
         }
-        public static GeneTypes GenType
+        public static GeneTypes GeneType
         {
-            get { return GlobalSettings._genType; }
-            set { GlobalSettings._genType = value; }
+            get { return GlobalSettings._geneType; }
+            set { GlobalSettings._geneType = value; }
         }
-        public static int NumberOfGens
+        public static int NumberOfGenes
         {
-            get { return GlobalSettings._numberOfGens; }
-            set { if (_numberOfGens == 0) GlobalSettings._numberOfGens = value; }
+            get { return GlobalSettings._numberOfGenes; }
+            set { if (_numberOfGenes == 0) GlobalSettings._numberOfGenes = value; }
         }
         public static SelectionMethods SelectionMethod
         {
@@ -135,8 +146,11 @@ namespace Genetic_Algorithm
 
         public static void ConsoleAppendText(String newText)
         {
-            tbConsole.Text += newText + "\n";
-            tbConsole.ScrollToEnd();
+            //TbConsole.Text += newText + "\n";
+            TbConsole.Dispatcher.Invoke(updateTbConsoleDelegate,
+                    System.Windows.Threading.DispatcherPriority.Background,
+                    new object[] { TextBox.TextProperty, TbConsole.Text + newText + "\n" });
+            TbConsole.ScrollToEnd();
         }
 
         private static void findBestOfAll(List<double> best)
@@ -148,21 +162,22 @@ namespace Genetic_Algorithm
 
         private static void DrawBestOfGeneration(List<double> best)
         {
-            double generationsFactor = 1 / best.Count * cvGraphs.Width;
-            double qualityFactor = 1 / BestOfAll * cvGraphs.Height; 
+            double generationsFactor = cvGraphs.Width / (best.Count - 1);
+            double qualityFactor = cvGraphs.Height / BestOfAll; 
             for (int i = 0; i < best.Count; i++)
             {                
-                ConsoleAppendText(i + " - " + best[i]);
-                plBestOfGenerations.Points.Add(new Point(i+1 * generationsFactor, cvGraphs.Height - best[i] * qualityFactor));
+                ConsoleAppendText(i + " | " + best[i]);
+                plBestOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - best[i] * qualityFactor));
             }
         }
 
         private static void DrawAverageOfGeneration(List<double> averages)
         {
-            double generationsFactor = 1 / averages.Count * cvGraphs.Width;
-            double qualityFactor = 1 / BestOfAll * cvGraphs.Height;
+            double generationsFactor = cvGraphs.Width / (averages.Count - 1);
+            double qualityFactor = cvGraphs.Height / BestOfAll;
+
             for (int i = 0; i < averages.Count; i++)
-                plBestOfGenerations.Points.Add(new Point(i+1 * generationsFactor, cvGraphs.Height - averages[i] * qualityFactor));
+                plBestOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - averages[i] * qualityFactor));
         }
 
         public static void DrawGraphs(List<double> best, List<double> averages)
