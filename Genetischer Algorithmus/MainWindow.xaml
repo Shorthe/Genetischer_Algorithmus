@@ -1,7 +1,7 @@
 ﻿<Window x:Class="Genetic_Algorithm.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="530"  Width="768">
+        Title="MainWindow" Height="530"  Width="784">
     <StackPanel>
         <GroupBox Header="Parameter" Padding="10">
             <Grid>
@@ -48,7 +48,7 @@
         </GroupBox>
         <Button Content="Algorithmus ausführen" Height="23" HorizontalAlignment="Center" Margin="5" Name="button1" VerticalAlignment="Top" Width="153" Click="button1_Click" />
         <GroupBox Header="Ausgabe" HorizontalAlignment="Stretch" Padding="0,10,0,10">            
-            <Grid>
+            <Grid Width="756">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
@@ -60,7 +60,7 @@
                 BorderBrush="LightGray"
                 HorizontalAlignment="Center"
                 VerticalAlignment="Top">
-                    <Canvas Height="256" HorizontalAlignment="Left" Name="cvGraphs" VerticalAlignment="Top" Width="300" />
+                    <Canvas Height="256" HorizontalAlignment="Left" Name="cvGraphs" VerticalAlignment="Top" Width="308" Grid.Column="1" Margin="14,1,0,0" />
                 </Border>
             </Grid>
         </GroupBox>

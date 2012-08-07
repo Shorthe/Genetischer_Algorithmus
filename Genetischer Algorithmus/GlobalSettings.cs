@@ -28,7 +28,8 @@ namespace Genetic_Algorithm
         private static int _matchSize;
         private static int _countOfIndividuals;
 
-        private static double HighestOfAll;
+        private static double HighestOfBest;
+        private static double HighestOfAverages;
 
         private static MutationRates _mutationRateType;
         private static GeneTypes _geneType;
@@ -151,12 +152,16 @@ namespace Genetic_Algorithm
             TbConsole.ScrollToEnd();
         }
 
-        private static void findHighestOfAll(List<double> best)
+        private static void findHighestOfAll(List<double> best, List<double> averages)
         {
-            HighestOfAll = best[0];
+            HighestOfAverages = averages[0];
+            HighestOfBest = best[0];
             for (int i = 1; i < best.Count; i++)
-                if (best[i] > HighestOfAll)
-                    HighestOfAll = best[i];
+                if (best[i] > HighestOfBest)
+                    HighestOfBest = best[i];
+            for (int i = 1; i < averages.Count; i++)
+                if (averages[i] > HighestOfAverages)
+                    HighestOfAverages = averages[i];
         }
 
         private static void DrawBestOfGeneration(List<double> best)
@@ -165,7 +170,7 @@ namespace Genetic_Algorithm
             for (int i = 0; i < best.Count; i++)
             {                
                 ConsoleAppendText(i + " | " + best[i]);
-                plBestOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - cvGraphs.Height * best[i] / HighestOfAll));
+                plBestOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - cvGraphs.Height * best[i] / HighestOfBest));
             }
         }
 
@@ -174,14 +179,44 @@ namespace Genetic_Algorithm
             double generationsFactor = cvGraphs.Width / (averages.Count - 1);
 
             for (int i = 0; i < averages.Count; i++)
-                plAverageOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - Math.Min(cvGraphs.Height * averages[i] / HighestOfAll, cvGraphs.Height)));
+                plAverageOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - cvGraphs.Height * averages[i] / HighestOfAverages));
+        }
+
+        private static void DrawAxes()
+        {
+            for (int i = 0; i < cvGraphs.Height / 50 - 1; i++)
+            {
+                Label axisValueLeft = new Label();
+                axisValueLeft.Content = Math.Round(i * 50 / cvGraphs.Height * HighestOfAverages, 2);
+                cvGraphs.Children.Add(axisValueLeft);
+                axisValueLeft.Foreground = plAverageOfGenerations.Stroke;
+                axisValueLeft.Margin = new Thickness(-20, cvGraphs.Height - i * 50 - 20, 0, 0);
+
+                Label axisValueRight = new Label();
+                axisValueRight.Content = Math.Round(i * 50 / cvGraphs.Height * HighestOfBest, 2);
+                cvGraphs.Children.Add(axisValueRight);
+                axisValueRight.Foreground = plBestOfGenerations.Stroke;
+                axisValueRight.Margin = new Thickness(cvGraphs.Width -20, cvGraphs.Height - i * 50 - 20, 0, 0);
+            };
+            Label highestLeft = new Label();
+            highestLeft.Content = Math.Round(HighestOfAverages, 2);
+            cvGraphs.Children.Add(highestLeft);
+            highestLeft.Foreground = plAverageOfGenerations.Stroke;
+            highestLeft.Margin = new Thickness(-20, 0, 0, 0);
+
+            Label highestRight = new Label();
+            highestRight.Content = Math.Round(HighestOfBest, 2);
+            cvGraphs.Children.Add(highestRight);
+            highestRight.Foreground = plBestOfGenerations.Stroke;
+            highestRight.Margin = new Thickness(cvGraphs.Width -20, 0, 0, 0);
         }
 
         public static void DrawGraphs(List<double> best, List<double> averages)
         {
-            findHighestOfAll(best);
+            findHighestOfAll(best, averages);
             DrawBestOfGeneration(best);
             DrawAverageOfGeneration(averages);
+            DrawAxes();
         }
     }
 }
