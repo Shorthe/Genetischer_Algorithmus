@@ -57,8 +57,12 @@
     </ApplicationDefinition>
     <Compile Include="Enums.cs" />
     <Compile Include="SystemOfEquation.cs" />
+    <Compile Include="SystemsOfEquation\Ackley_SoE.cs" />
+    <Compile Include="SystemsOfEquation\C_SoE.cs" />
+    <Compile Include="SystemsOfEquation\Griewank_SoE.cs" />
     <Compile Include="SystemsOfEquation\Standard_SoE.cs" />
     <Compile Include="IndividualComparer.cs" />
+    <Compile Include="SystemsOfEquation\Zero_SoE.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>

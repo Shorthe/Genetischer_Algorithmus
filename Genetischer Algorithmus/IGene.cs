@@ -5,10 +5,10 @@ using System.Text;
 
 namespace Genetic_Algorithm
 {
-    abstract class Gene
+    abstract class IGene
     {
         public abstract double getValue();
-        public abstract void recombine(Gene gene1, Gene gene2);
+        //public abstract void recombine(IGene gene1, IGene gene2, int position);
         public abstract void mutate();
         //public static void setIntervalBounds(double aLowerBound, double aUpperBound);
     }

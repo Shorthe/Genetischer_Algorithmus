@@ -11,8 +11,6 @@ namespace Genetic_Algorithm
 {
     class GlobalSettings
     {
-        private static int _parents = 4;
-
         private delegate void UpdateTbConsoleDelegate(System.Windows.DependencyProperty dp, Object value);
         private static UpdateTbConsoleDelegate updateTbConsoleDelegate;
         private static TextBox _tbConsole;
@@ -20,20 +18,20 @@ namespace Genetic_Algorithm
         public static Canvas cvGraphs;
         public static Polyline plBestOfGenerations = new Polyline();
         public static Polyline plAverageOfGenerations = new Polyline();
+        private static double HighestOfBest;
+        private static double HighestOfAverages;
 
         private static int _mutationsMin;
         private static int _mutationsMax;
         private static int _rekombinationRate;
         private static int _generations;
         private static int _matchSize;
-        private static int _countOfIndividuals;
-
-        private static double HighestOfBest;
-        private static double HighestOfAverages;
+        private static int _countOfParents;
+        private static int _countOfChildren;
 
         private static MutationRates _mutationRateType;
         private static GeneTypes _geneType;
-        private static int _numberOfGenes = 3;
+        private static int _numberOfGenes;
         private static SelectionMethods _selectionMethod;
         private static double constantLinearMutation;
         private static double constantExponentialMutation;
@@ -49,11 +47,6 @@ namespace Genetic_Algorithm
             }
         }
 
-        public static int Parents
-        {
-            get { return _parents; }
-            set { _parents = value; }
-        }
         public static int MutationsMin
         {
             get { return GlobalSettings._mutationsMin; }
@@ -93,7 +86,7 @@ namespace Genetic_Algorithm
         public static int NumberOfGenes
         {
             get { return GlobalSettings._numberOfGenes; }
-            set { if (_numberOfGenes == 0) GlobalSettings._numberOfGenes = value; }
+            set { GlobalSettings._numberOfGenes = value; }
         }
         public static SelectionMethods SelectionMethod
         {
@@ -105,16 +98,29 @@ namespace Genetic_Algorithm
             get { return GlobalSettings._matchSize; }
             set { GlobalSettings._matchSize = value; }
         }
-        public static int CountOfIndividuals
+        public static int CountOfChildren
         {
-            get { return GlobalSettings._countOfIndividuals; }
-            set { GlobalSettings._countOfIndividuals = value; }
+            get { return GlobalSettings._countOfChildren; }
+        }
+
+        public static int CountOfParents
+        {
+            get { return _countOfParents; }
+        }
+
+        /// <summary>
+        /// 1/6 der Population sind Eltern und 5/6 sind Kinder
+        /// </summary>
+        /// <param name="PopulationSize"></param>
+        public static void setCountOfParentsAndChildren(int PopulationSize)
+        {
+            _countOfParents = (int)Math.Round((double)PopulationSize / 6);
+            _countOfChildren = PopulationSize - _countOfParents;
         }
 
         private static void calculateMutationsConstants()
         {
             constantLinearMutation = (double)(GlobalSettings.MutationsMax - GlobalSettings.MutationsMin) / GlobalSettings.Generations;
-            //constantExponentialMutation = (double)GlobalSettings.MutationsMin / (GlobalSettings.MutationsMax * GlobalSettings.Generations);
             constantExponentialMutation = Math.Log((double)GlobalSettings.MutationsMin / GlobalSettings.MutationsMax) / GlobalSettings.Generations;
         }
 
@@ -145,7 +151,6 @@ namespace Genetic_Algorithm
 
         public static void ConsoleAppendText(String newText)
         {
-            //TbConsole.Text += newText + "\n";
             TbConsole.Dispatcher.Invoke(updateTbConsoleDelegate,
                     System.Windows.Threading.DispatcherPriority.Background,
                     new object[] { TextBox.TextProperty, TbConsole.Text + newText + "\n" });
@@ -166,20 +171,19 @@ namespace Genetic_Algorithm
 
         private static void DrawBestOfGeneration(List<double> best)
         {
-            double generationsFactor = cvGraphs.Width / (best.Count - 1);
+            double ScaleX = cvGraphs.Width / (best.Count - 1);
             for (int i = 0; i < best.Count; i++)
             {                
-                ConsoleAppendText(i + " | " + best[i]);
-                plBestOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - cvGraphs.Height * best[i] / HighestOfBest));
+                plBestOfGenerations.Points.Add(new Point(i * ScaleX, cvGraphs.Height - cvGraphs.Height * best[i] / HighestOfBest));
             }
         }
 
         private static void DrawAverageOfGeneration(List<double> averages)
         {
-            double generationsFactor = cvGraphs.Width / (averages.Count - 1);
+            double ScaleX = cvGraphs.Width / (averages.Count - 1);
 
             for (int i = 0; i < averages.Count; i++)
-                plAverageOfGenerations.Points.Add(new Point(i * generationsFactor, cvGraphs.Height - cvGraphs.Height * averages[i] / HighestOfAverages));
+                plAverageOfGenerations.Points.Add(new Point(i * ScaleX, cvGraphs.Height - cvGraphs.Height * averages[i] / HighestOfAverages));
         }
 
         private static void DrawAxes()
@@ -214,9 +218,10 @@ namespace Genetic_Algorithm
         public static void DrawGraphs(List<double> best, List<double> averages)
         {
             findHighestOfAll(best, averages);
+            DrawAxes();
             DrawBestOfGeneration(best);
             DrawAverageOfGeneration(averages);
-            DrawAxes();
+            
         }
     }
 }

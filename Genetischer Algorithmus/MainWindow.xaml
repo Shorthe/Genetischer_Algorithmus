@@ -1,19 +1,13 @@
 ﻿<Window x:Class="Genetic_Algorithm.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="MainWindow" Height="530"  Width="784">
+        Title="MainWindow" Height="718"  Width="784">
     <StackPanel>
         <GroupBox Header="Parameter" Padding="10">
             <Grid>
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="602,33,0,0" Name="tbUpperBound" VerticalAlignment="Top" Width="39" Text="10" />
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="557,33,0,0" Name="tbLowerBound" VerticalAlignment="Top" Width="39" Text="-10" />
-                <Label Content="Grenzen" Height="28" HorizontalAlignment="Left" Margin="489,31,0,0" Name="label1" VerticalAlignment="Top" Width="62" />
-                <Label Content="Speichermodus" Height="28" HorizontalAlignment="Left" Margin="355,10,0,0" Name="label2" VerticalAlignment="Top" Width="120" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="355,36,0,0" Name="cbGenType" VerticalAlignment="Top" Width="120">
-                    <ComboBoxItem Content="binär" IsSelected="True" />
-                    <ComboBoxItem Content="dezimal" />
-                </ComboBox>
-
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="611,94,0,0" Name="tbUpperBound" VerticalAlignment="Top" Width="39" Text="10" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="566,94,0,0" Name="tbLowerBound" VerticalAlignment="Top" Width="39" Text="-10" />
+                <Label Content="Grenzen" Height="28" HorizontalAlignment="Left" Margin="498,92,0,0" Name="label1" VerticalAlignment="Top" Width="62" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="143,67,0,0" Name="tbRecombinations" VerticalAlignment="Top" Width="39" Text="100" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="143,96,0,0" Name="tbMutationsMax" VerticalAlignment="Top" Width="39" Text="30" />
                 <TextBox FlowDirection="LeftToRight" Height="23" Margin="143,38,0,0" Name="tbGenerationSize" Text="40" VerticalAlignment="Top" HorizontalAlignment="Left" Width="39" />        
@@ -22,8 +16,8 @@
                 <Label Content="Rekombinationen" Height="28" HorizontalAlignment="Left" Margin="12,65,0,0" Name="label4" VerticalAlignment="Top" Width="106" />
                 <Label Content="Mutationen" Height="28" HorizontalAlignment="Left" Margin="12,94,0,0" Name="label5" VerticalAlignment="Top" Width="106" />
                 <Label Content="Generationsgröße" Height="28" HorizontalAlignment="Left" Margin="12,36,0,0" Name="label9" VerticalAlignment="Top" Width="106" />        
-                <Label Content="Gleichungssystem" Height="28" HorizontalAlignment="Left" Margin="355,67,0,0" Name="label6" VerticalAlignment="Top" Width="120" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="355,94,0,0" Name="cbSystemOfEquation" VerticalAlignment="Top" Width="120">
+                <Label Content="Gleichungssystem" Height="28" HorizontalAlignment="Left" Margin="355,9,0,0" Name="label6" VerticalAlignment="Top" Width="120" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="355,36,0,0" Name="cbSystemOfEquation" VerticalAlignment="Top" Width="120" SelectionChanged="cbSystemOfEquation_SelectionChanged">
                     <ComboBoxItem Content="Standard" IsSelected="True" />
                     <ComboBoxItem Content="Griewank-Funktion" />
                     <ComboBoxItem Content="Ackley-Funktion" />
@@ -44,18 +38,25 @@
                     <ComboBoxItem Content="Flaches Turnier" />
                     <ComboBoxItem Content="Stufen-Turnier" />
                 </ComboBox>
+                <Label Content="Genanzahl" Height="28" HorizontalAlignment="Left" Margin="368,92,0,0" VerticalAlignment="Top" Width="70" />
+                <TextBox Height="23" HorizontalAlignment="Right" Margin="0,93,255,0" Name="tbNumberGenes" Text="5" VerticalAlignment="Top" Width="39" />
             </Grid>
         </GroupBox>
         <Button Content="Algorithmus ausführen" Height="23" HorizontalAlignment="Center" Margin="5" Name="button1" VerticalAlignment="Top" Width="153" Click="button1_Click" />
         <GroupBox Header="Ausgabe" HorizontalAlignment="Stretch" Padding="0,10,0,10">            
-            <Grid Width="756">
+            <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="auto"></ColumnDefinition>
                     <ColumnDefinition></ColumnDefinition>
                 </Grid.ColumnDefinitions>
-                <TextBox Height="257" HorizontalAlignment="Left" Name="tbConsole" VerticalAlignment="Top" Width="425" UseLayoutRounding="False" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
+                <Grid.RowDefinitions>
+                    <RowDefinition></RowDefinition>
+                    <RowDefinition></RowDefinition>
+                </Grid.RowDefinitions>
+                <TextBox Height="180" HorizontalAlignment="Stretch" Grid.ColumnSpan="2" Name="tbConsole" VerticalAlignment="Top" UseLayoutRounding="False" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto" />
                 <Border 
-                Grid.Column="1"
+                Grid.Row="1"
+                Grid.Column="0"
                 BorderThickness="1"
                 BorderBrush="LightGray"
                 HorizontalAlignment="Center"

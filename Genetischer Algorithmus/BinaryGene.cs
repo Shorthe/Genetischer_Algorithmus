@@ -5,14 +5,19 @@ using System.Text;
 
 namespace Genetic_Algorithm
 {
-    class BinaryGene : Gene, ICloneable
+    class BinaryGene : IGene, ICloneable
     {
-        private static int size = 8;
+        private static int size = 64;
 	    public List<int> sequence;
         private static double lowerBound;
         private static double upperBound;
 	    private static double decimalFactor = 1;
         private static Random random = new Random();
+
+        public static int Size
+        {
+            get { return BinaryGene.size; }
+        }
 
         public BinaryGene()
         {            
@@ -21,6 +26,18 @@ namespace Genetic_Algorithm
             for (int i = 0; i < size; i++)
             {
                 sequence.Add(random.Next(2));
+            }
+        }
+
+        public BinaryGene(IGene gene1, IGene gene2, int position)
+        {
+            sequence = new List<int>();
+            for (int i = 0; i < BinaryGene.size; i++)
+            {
+                if (i < position)
+                    this.sequence.Add((gene1 as BinaryGene).sequence[i]);
+                else
+                    this.sequence.Add((gene2 as BinaryGene).sequence[i]);
             }
         }
 
@@ -35,15 +52,23 @@ namespace Genetic_Algorithm
             return lowerBound + decimalFactor * sum;
         }
 
-        public override void recombine(Gene gene1, Gene gene2)
-        {
-            int sequencePointer = random.Next(size);
-            if (sequencePointer > 0)
-            {
-                this.sequence.InsertRange(0, ((BinaryGene) gene1).sequence.GetRange(0, sequencePointer));
-            }
-            this.sequence.InsertRange(sequencePointer, ((BinaryGene) gene2).sequence.GetRange(sequencePointer, size - sequencePointer));
-        }
+        //public override void recombine(IGene gene1, IGene gene2, int position)
+        //{
+        //    for (int i = 0; i < BinaryGene.size; i++)
+        //    {
+        //        if (i < position)
+        //            this.sequence[i] = (gene1 as BinaryGene).sequence[i];
+        //        else
+        //            this.sequence[i] = (gene2 as BinaryGene).sequence[i];
+        //    }
+
+        //    //Fehler Gen wird länger, weil kein remove vorhanden ist
+        //    //if (position > 0)
+        //    //{
+        //    //    this.sequence.InsertRange(0, ((BinaryGene)gene1).sequence.GetRange(0, position));
+        //    //}
+        //    //this.sequence.InsertRange(position, ((BinaryGene)gene2).sequence.GetRange(position, size - position));
+        //}
 
         public override void mutate()
         {

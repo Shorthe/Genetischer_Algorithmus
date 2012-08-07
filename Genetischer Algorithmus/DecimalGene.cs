@@ -5,7 +5,7 @@ using System.Text;
 
 namespace Genetic_Algorithm 
 {
-    class DecimalGene : Gene
+    class DecimalGene : IGene
     {
         private double value;
         private static int size = 0;
@@ -24,10 +24,10 @@ namespace Genetic_Algorithm
             return value;
         }
 
-        public override void recombine(Gene gene1, Gene gene2)
-        {
-            throw new NotImplementedException();
-        }
+        //public override void recombine(IGene gene1, IGene gene2, int position)
+        //{
+        //    throw new NotImplementedException();
+        //}
 
         public override void mutate()
         {

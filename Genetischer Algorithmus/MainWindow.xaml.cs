@@ -19,10 +19,15 @@ namespace Genetic_Algorithm
         public MainWindow()
         {
             InitializeComponent();
-            for (int i = 0; i < 10; i++)
-            {
-                new BinaryGene().getValue();
-            }
+            //for (int i = 0; i < 10; i++)
+            //{
+            //    new BinaryGene().getValue();
+            //}
+
+            if (cbSystemOfEquation.SelectedIndex == 0)
+                tbNumberGenes.IsEnabled = false;
+            else
+                tbNumberGenes.IsEnabled = true;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -41,7 +46,7 @@ namespace Genetic_Algorithm
             GlobalSettings.MutationsMin = int.Parse(tbMutationsMin.Text);
             GlobalSettings.MutationsMax = int.Parse(tbMutationsMax.Text);            
             GlobalSettings.RekombinationRate = int.Parse(tbRecombinations.Text);
-            GlobalSettings.CountOfIndividuals = int.Parse(tbGenerationSize.Text);
+            GlobalSettings.setCountOfParentsAndChildren(int.Parse(tbGenerationSize.Text));
             
             //Mutationsrate
             if (cbMutationRate.SelectedIndex == 0)
@@ -64,47 +69,60 @@ namespace Genetic_Algorithm
                 throw new NotImplementedException("Das Selektionsverfahren " + cbSelection.SelectedValue + " wurde nicht implementiert!");
 
             //Gen Typ
-            if (cbGenType.SelectedIndex == 0)
-            {
+            //if (cbGenType.SelectedIndex == 0)
+            //{
                 BinaryGene.setIntervalBounds(Math.Round(double.Parse(tbLowerBound.Text), 2), Math.Round(double.Parse(tbUpperBound.Text), 2));
                 GlobalSettings.GeneType = GeneTypes.Binary;
-            }
-            else if (cbGenType.SelectedIndex == 1)
-            {
-                DecimalGene.setIntervalBounds(Math.Round(double.Parse(tbLowerBound.Text), 2), Math.Round(double.Parse(tbUpperBound.Text), 2));
-                GlobalSettings.GeneType = GeneTypes.Decimal;
-            }
-            else
-            {
-                throw new NotImplementedException();
-            }
+            //}
+            //else if (cbGenType.SelectedIndex == 1)
+            //{
+            //    DecimalGene.setIntervalBounds(Math.Round(double.Parse(tbLowerBound.Text), 2), Math.Round(double.Parse(tbUpperBound.Text), 2));
+            //    GlobalSettings.GeneType = GeneTypes.Decimal;
+            //}
+            //else
+            //{
+            //    throw new NotImplementedException();
+            //}
 
             //Gleichungssystem
             // ggf. umstellen auf enumeration
+            GlobalSettings.NumberOfGenes = int.Parse(tbNumberGenes.Text);
             if (cbSystemOfEquation.SelectedIndex == 0)
             {
+                GlobalSettings.NumberOfGenes = 3;
                 new Algorithm().findSolution(new SystemsOfEquation.Standard_SoE());
             }
-            else if(cbSystemOfEquation.SelectedIndex == 1)
+            else if (cbSystemOfEquation.SelectedIndex == 1)
             {
-                throw new NotImplementedException();
+                new Algorithm().findSolution(new SystemsOfEquation.Griewank_SoE());
             }
             else if (cbSystemOfEquation.SelectedIndex == 2)
             {
-                throw new NotImplementedException();
+                new Algorithm().findSolution(new SystemsOfEquation.Ackley_SoE());
             }
             else if (cbSystemOfEquation.SelectedIndex == 3)
             {
-                throw new NotImplementedException();
+                new Algorithm().findSolution(new SystemsOfEquation.C_SoE());
             }
             else if (cbSystemOfEquation.SelectedIndex == 4)
             {
-                throw new NotImplementedException();
+                new Algorithm().findSolution(new SystemsOfEquation.Zero_SoE());
             }
             else
             {
                 throw new NotImplementedException();
             }
+        }
+
+        private void cbSystemOfEquation_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tbNumberGenes == null)
+                return;
+
+            if (cbSystemOfEquation.SelectedIndex == 0)
+                tbNumberGenes.IsEnabled = false;
+            else
+                tbNumberGenes.IsEnabled = true;
         }
     }
 }
