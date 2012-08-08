@@ -7,7 +7,7 @@ namespace Genetic_Algorithm
 {
     class BinaryGene : IGene, ICloneable
     {
-        private static int size = 64;
+        private static int size = 16;
 	    public List<int> sequence;
         private static double lowerBound;
         private static double upperBound;

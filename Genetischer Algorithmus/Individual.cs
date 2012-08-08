@@ -87,12 +87,9 @@ namespace Genetic_Algorithm
                 {
                     child.gens.Add((parent1.gens[i] as BinaryGene).Clone() as BinaryGene);
                 }
-                //Fehler, Verweise auf Objekte, werden mitkopiert
-                //child.gens.InsertRange(0, parent1.gens.GetRange(0, sliceGeneNumber));
             }
 
             child.gens.Add(new BinaryGene(parent1.gens[sliceGeneNumber], parent2.gens[sliceGeneNumber], selectedGenPosition % BinaryGene.Size));
-            //child.gens[sliceGeneNumber].recombine(parent1.gens[sliceGeneNumber], parent2.gens[sliceGeneNumber], selectedGenPosition % BinaryGene.Size);
 
             if (sliceGeneNumber < parent2.gens.Count - 1)
             {
@@ -105,12 +102,23 @@ namespace Genetic_Algorithm
             return child;
         }
 
-
-        public static Individual mutate(Individual ind)
+        /// <summary>
+        /// Genlänge / 8 mal mutieren, da sonst Mutation kaum Auswirkung hat
+        /// </summary>
+        public void mutate()
         {
-            ind.gens[GlobalSettings.random.Next(ind.gens.Count)].mutate();
-            return ind;
+            for (int i = 0; i < (int)Math.Ceiling(GlobalSettings.NumberOfGenes * BinaryGene.Size / 8d); i++)
+            {
+                this.gens[GlobalSettings.random.Next(GlobalSettings.NumberOfGenes)].mutate();
+            }
         }
+
+
+        //public static Individual mutate(Individual ind)
+        //{
+        //    ind.gens[GlobalSettings.random.Next(ind.gens.Count)].mutate();
+        //    return ind;
+        //}
 
         public object Clone()
         {

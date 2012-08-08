@@ -28,6 +28,11 @@ namespace Genetic_Algorithm
                 tbNumberGenes.IsEnabled = false;
             else
                 tbNumberGenes.IsEnabled = true;
+
+            if (cbMutationRate.SelectedIndex == 0)
+                tbMutationsMin.IsEnabled = false;
+            else
+                tbMutationsMin.IsEnabled = true;
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
@@ -123,6 +128,18 @@ namespace Genetic_Algorithm
                 tbNumberGenes.IsEnabled = false;
             else
                 tbNumberGenes.IsEnabled = true;
+        }
+
+        private void cbMutationRate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            if (tbMutationsMin == null)
+                return;
+
+            if (cbMutationRate.SelectedIndex == 0)
+                tbMutationsMin.IsEnabled = false;
+            else
+                tbMutationsMin.IsEnabled = true;
+            
         }
     }
 }

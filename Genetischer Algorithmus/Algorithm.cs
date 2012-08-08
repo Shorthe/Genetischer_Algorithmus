@@ -7,8 +7,8 @@ namespace Genetic_Algorithm
 {
     class Algorithm
     {
-        private List<Individual> oldPopulation;
-        private List<Individual> newPopulation;
+        private List<Individual> parents;
+        private List<Individual> children;
         private List<Individual> BestIndividuals;
         private int currentGeneration;
         private List<double> bestOfGenerations;
@@ -23,13 +23,13 @@ namespace Genetic_Algorithm
             bestOfGenerations     = new List<Double>();
             averagesOfGenerations = new List<Double>();
 
-            oldPopulation = new List<Individual>();
-            newPopulation = new List<Individual>();
+            parents = new List<Individual>();
+            children = new List<Individual>();
             BestIndividuals = new List<Individual>();
             for (int i = 0; i < GlobalSettings.CountOfChildren + GlobalSettings.CountOfParents; i++)
             {
-                oldPopulation.Add(new Individual());
-                oldPopulation[i].Quality = SoE.calculateFitness(oldPopulation[i]);
+                parents.Add(new Individual());
+                parents[i].Quality = SoE.calculateFitness(parents[i]);
             }
 
             for (currentGeneration = 0; currentGeneration < GlobalSettings.Generations; currentGeneration++)
@@ -38,25 +38,28 @@ namespace Genetic_Algorithm
                 recombine();
                 mutate();
 
-                for (int j = 0; j < newPopulation.Count; j++)
-                    newPopulation[j].Quality = SoE.calculateFitness(newPopulation[j]);
+                for (int j = 0; j < children.Count; j++)
+                    children[j].Quality = SoE.calculateFitness(children[j]);
 
-                newPopulation.Sort(GlobalSettings.qualityComparer);
+                children.Sort(GlobalSettings.qualityComparer);
                 
                 // die besten x Eltern behalten
-                oldPopulation.Sort(GlobalSettings.qualityComparer);
-                if (oldPopulation.Count > GlobalSettings.CountOfParents)
-                    oldPopulation.RemoveRange(GlobalSettings.CountOfParents, oldPopulation.Count - GlobalSettings.CountOfParents);
+                parents.Sort(GlobalSettings.qualityComparer);
+                if (parents.Count > GlobalSettings.CountOfParents)
+                    parents.RemoveRange(GlobalSettings.CountOfParents, parents.Count - GlobalSettings.CountOfParents);
                 selectBySelectionMethod(GlobalSettings.SelectionMethod);
              
-                bestOfGenerations.Add(oldPopulation[0].Quality);
-                GlobalSettings.ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + oldPopulation[0]);
+                bestOfGenerations.Add(parents[0].Quality);
+                GlobalSettings.ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
                 double sumOfQuality = 0;
-                for (int i = 0; i < oldPopulation.Count; i++)
-                    sumOfQuality += oldPopulation[i].Quality;
-                averagesOfGenerations.Add(sumOfQuality / oldPopulation.Count);
-                
-                newPopulation.Clear();
+                for (int i = 0; i < parents.Count; i++)
+                    sumOfQuality += parents[i].Quality;
+                averagesOfGenerations.Add(sumOfQuality / parents.Count);
+
+                Console.WriteLine("- Größe Eltern: " + parents.Count);
+                Console.WriteLine("- Größe Kinder: " + children.Count);
+
+                children.Clear();
             }
 
             GlobalSettings.DrawGraphs(bestOfGenerations, averagesOfGenerations);
@@ -78,21 +81,23 @@ namespace Genetic_Algorithm
                 //vermeiden, dass sich gleiches Individuum rekombiniert, sonst entsteht ein Klon
                 do
                 {
-                    parent1 = oldPopulation[GlobalSettings.random.Next(oldPopulation.Count)];
-                    parent2 = oldPopulation[GlobalSettings.random.Next(oldPopulation.Count)];
+                    parent1 = parents[GlobalSettings.random.Next(parents.Count)];
+                    parent2 = parents[GlobalSettings.random.Next(parents.Count)];
                 } while(parent1 == parent2);
 
-                newPopulation.Add(Individual.recombine(parent1, parent2));
+                children.Add(Individual.recombine(parent1, parent2));
             }
         }
 
         private void mutate()
         {
-            Individual ind;
+            //Individual ind;
             for (int i = 0; i < GlobalSettings.getCountOfMutations(currentGeneration) ; i++)
             {
-                ind = (Individual)oldPopulation[GlobalSettings.random.Next(oldPopulation.Count)].Clone();
-                newPopulation.Add(Individual.mutate(ind));
+                //ind = (Individual)parents[GlobalSettings.random.Next(parents.Count)].Clone();
+                //children.Add(Individual.mutate(ind));
+
+                children[GlobalSettings.random.Next(children.Count)].mutate();
             }
 
             Console.WriteLine("Mutationsrate: " + GlobalSettings.getCountOfMutations(currentGeneration));
@@ -100,32 +105,32 @@ namespace Genetic_Algorithm
 
         private void selectFlatTournament()
         {
-            oldPopulation.Clear();
+            parents.Clear();
             Individual bestPlayer;
-            for (int i = 0; i < GlobalSettings.CountOfChildren; i++)
+            for (int i = 0; i < GlobalSettings.CountOfChildren + GlobalSettings.CountOfParents; i++)
             {
-                bestPlayer = newPopulation[GlobalSettings.random.Next(newPopulation.Count)];
+                bestPlayer = children[GlobalSettings.random.Next(children.Count)];
                 for (int j = 0; j < GlobalSettings.MatchSize - 1; j++)
                 {
-                    Individual competitor = newPopulation[GlobalSettings.random.Next(newPopulation.Count)];
+                    Individual competitor = children[GlobalSettings.random.Next(children.Count)];
                     if (bestPlayer.Quality > competitor.Quality)
                         bestPlayer = competitor;
                 }
-                oldPopulation.Add(bestPlayer);
+                parents.Add(bestPlayer);
             }
         }
 
         private void selectSteppedTournament()
         {
-            for (int i = 0; i < newPopulation.Count; i++)
-                newPopulation[i].TournamentScore = 0;
+            for (int i = 0; i < children.Count; i++)
+                children[i].TournamentScore = 0;
 
-            for (int i = 0; i < newPopulation.Count; i++)
+            for (int i = 0; i < children.Count; i++)
             {
-                Individual player = newPopulation[i];
+                Individual player = children[i];
                 for (int j = 0; j < GlobalSettings.MatchSize; j++)
                 {
-                    Individual competitor = newPopulation[GlobalSettings.random.Next(newPopulation.Count)];
+                    Individual competitor = children[GlobalSettings.random.Next(children.Count)];
                     if (player.Quality == competitor.Quality)
                     {
                         player.TournamentScore++;
@@ -137,17 +142,17 @@ namespace Genetic_Algorithm
                         player.TournamentScore++;
                 }
             }
-            newPopulation.Sort(GlobalSettings.tournamentComparer);
+            children.Sort(GlobalSettings.tournamentComparer);
 
-            oldPopulation.Clear();
-            oldPopulation.AddRange(newPopulation.GetRange(0, (int)Math.Min(newPopulation.Count, GlobalSettings.CountOfChildren)));
+            parents.Clear();
+            parents.AddRange(children.GetRange(0, (int)Math.Min(children.Count, GlobalSettings.CountOfChildren + GlobalSettings.CountOfParents)));
 
         }
 
         private void selectDeterministically()
         {
-            newPopulation.Sort(GlobalSettings.qualityComparer);
-            oldPopulation.AddRange(newPopulation.GetRange(0, Math.Min(GlobalSettings.CountOfChildren, newPopulation.Count)));
+            children.Sort(GlobalSettings.qualityComparer);
+            parents.AddRange(children.GetRange(0, Math.Min(GlobalSettings.CountOfChildren, children.Count)));
         }
 
         private void selectBySelectionMethod(SelectionMethods selectionMethod)
@@ -158,7 +163,7 @@ namespace Genetic_Algorithm
                 case SelectionMethods.flatTournament    : selectFlatTournament();    break;
                 case SelectionMethods.steppedTournament : selectSteppedTournament(); break;
             }
-            oldPopulation.Sort(GlobalSettings.qualityComparer);
+            parents.Sort(GlobalSettings.qualityComparer);
         }
 	
     }

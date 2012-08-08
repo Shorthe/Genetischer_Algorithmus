@@ -8,10 +8,10 @@
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="611,94,0,0" Name="tbUpperBound" VerticalAlignment="Top" Width="39" Text="10" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="566,94,0,0" Name="tbLowerBound" VerticalAlignment="Top" Width="39" Text="-10" />
                 <Label Content="Grenzen" Height="28" HorizontalAlignment="Left" Margin="498,92,0,0" Name="label1" VerticalAlignment="Top" Width="62" />
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="143,67,0,0" Name="tbRecombinations" VerticalAlignment="Top" Width="39" Text="100" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="143,67,0,0" Name="tbRecombinations" VerticalAlignment="Top" Width="39" Text="60" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="143,96,0,0" Name="tbMutationsMax" VerticalAlignment="Top" Width="39" Text="30" />
-                <TextBox FlowDirection="LeftToRight" Height="23" Margin="143,38,0,0" Name="tbGenerationSize" Text="40" VerticalAlignment="Top" HorizontalAlignment="Left" Width="39" />        
-                <TextBox Height="23" Margin="143,10,0,0" Name="tbGenerations" VerticalAlignment="Top" FlowDirection="LeftToRight" Text="20" HorizontalAlignment="Left" Width="39" />
+                <TextBox FlowDirection="LeftToRight" Height="23" Margin="143,38,0,0" Name="tbGenerationSize" Text="50" VerticalAlignment="Top" HorizontalAlignment="Left" Width="39" />        
+                <TextBox Height="23" Margin="143,10,0,0" Name="tbGenerations" VerticalAlignment="Top" FlowDirection="LeftToRight" Text="40" HorizontalAlignment="Left" Width="39" />
                 <Label Content="Generationen" Height="28" HorizontalAlignment="Left" Margin="12,8,0,0" Name="label3" VerticalAlignment="Top" Width="106" />
                 <Label Content="Rekombinationen" Height="28" HorizontalAlignment="Left" Margin="12,65,0,0" Name="label4" VerticalAlignment="Top" Width="106" />
                 <Label Content="Mutationen" Height="28" HorizontalAlignment="Left" Margin="12,94,0,0" Name="label5" VerticalAlignment="Top" Width="106" />
@@ -25,7 +25,7 @@
                     <ComboBoxItem Content="Nullstellenberechnung" />
                 </ComboBox>
                 <Label Content="Mutationsrate" Height="28" HorizontalAlignment="Left" Margin="213,67,0,0" Name="label7" VerticalAlignment="Top" Width="120" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="213,94,0,0" Name="cbMutationRate" VerticalAlignment="Top" Width="120">
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="213,94,0,0" Name="cbMutationRate" VerticalAlignment="Top" Width="120" SelectionChanged="cbMutationRate_SelectionChanged">
                     <ComboBoxItem Content="konstant" IsSelected="True" />
                     <ComboBoxItem Content="linear" />
                     <ComboBoxItem Content="exponentiell" />
