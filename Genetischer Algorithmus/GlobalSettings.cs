@@ -25,7 +25,7 @@ namespace Genetic_Algorithm
         private static int _mutationsMax;
         private static int _rekombinationRate;
         private static int _generations;
-        private static int _matchSize = 5;
+        private static int _matchSize = 10;
         private static int _countOfParents;
         private static int _countOfChildren;
 

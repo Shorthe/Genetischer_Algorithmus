@@ -56,9 +56,6 @@ namespace Genetic_Algorithm
                     sumOfQuality += parents[i].Quality;
                 averagesOfGenerations.Add(sumOfQuality / parents.Count);
 
-                Console.WriteLine("- Größe Eltern: " + parents.Count);
-                Console.WriteLine("- Größe Kinder: " + children.Count);
-
                 children.Clear();
             }
 
@@ -105,9 +102,9 @@ namespace Genetic_Algorithm
 
         private void selectFlatTournament()
         {
-            parents.Clear();
+            //parents.Clear();
             Individual bestPlayer;
-            for (int i = 0; i < GlobalSettings.CountOfChildren + GlobalSettings.CountOfParents; i++)
+            for (int i = 0; i < GlobalSettings.CountOfChildren; i++)
             {
                 bestPlayer = children[GlobalSettings.random.Next(children.Count)];
                 for (int j = 0; j < GlobalSettings.MatchSize - 1; j++)
@@ -137,15 +134,16 @@ namespace Genetic_Algorithm
                         competitor.TournamentScore++;
                     }
                     else if (player.Quality < competitor.Quality)
-                        competitor.TournamentScore++;
-                    else
                         player.TournamentScore++;
+                    else
+                        competitor.TournamentScore++;                        
                 }
             }
+            
             children.Sort(GlobalSettings.tournamentComparer);
 
-            parents.Clear();
-            parents.AddRange(children.GetRange(0, (int)Math.Min(children.Count, GlobalSettings.CountOfChildren + GlobalSettings.CountOfParents)));
+            //parents.Clear();
+            parents.AddRange(children.GetRange(0, (int)Math.Min(children.Count, GlobalSettings.CountOfChildren)));
 
         }
 
