@@ -19,10 +19,6 @@ namespace Genetic_Algorithm
         public MainWindow()
         {
             InitializeComponent();
-            //for (int i = 0; i < 10; i++)
-            //{
-            //    new BinaryGene().getValue();
-            //}
 
             if (cbSystemOfEquation.SelectedIndex == 0)
                 tbNumberGenes.IsEnabled = false;
@@ -40,12 +36,15 @@ namespace Genetic_Algorithm
             GlobalSettings.TbConsole = tbConsole;
             GlobalSettings.TbConsole.Text = "";
 
-            GlobalSettings.cvGraphs = cvGraphs;
-            GlobalSettings.cvGraphs.Children.Clear();
+            GlobalSettings.cvYGraphs = cvYGraphs;
+            GlobalSettings.cvYGraphs.Children.Clear();
             GlobalSettings.plBestOfGenerations.Stroke = Brushes.DarkGoldenrod;
             GlobalSettings.plAverageOfGenerations.Stroke = Brushes.DarkRed;
-            GlobalSettings.cvGraphs.Children.Add(GlobalSettings.plAverageOfGenerations);
-            GlobalSettings.cvGraphs.Children.Add(GlobalSettings.plBestOfGenerations);
+            GlobalSettings.cvYGraphs.Children.Add(GlobalSettings.plAverageOfGenerations);
+            GlobalSettings.cvYGraphs.Children.Add(GlobalSettings.plBestOfGenerations);
+
+            GlobalSettings.cvXGraphs = cvXGraphs;
+            GlobalSettings.cvXGraphs.Children.Clear();
 
             GlobalSettings.Generations = int.Parse(tbGenerations.Text);
             GlobalSettings.MutationsMin = int.Parse(tbMutationsMin.Text);

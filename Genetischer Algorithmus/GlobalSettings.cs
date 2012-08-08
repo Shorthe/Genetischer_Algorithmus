@@ -15,11 +15,15 @@ namespace Genetic_Algorithm
         private static UpdateTbConsoleDelegate updateTbConsoleDelegate;
         private static TextBox _tbConsole;
 
-        public static Canvas cvGraphs;
+        public static Canvas cvYGraphs;
+        public static Canvas cvXGraphs;
+        public static List<Polyline> XValuePolylines =  new List<Polyline>();
         public static Polyline plBestOfGenerations = new Polyline();
         public static Polyline plAverageOfGenerations = new Polyline();
         private static double HighestOfBest;
         private static double HighestOfAverages;
+        private static double HighestOfXValues;
+        private static double LowestOfXValues;
 
         private static int _mutationsMin;
         private static int _mutationsMax;
@@ -38,6 +42,8 @@ namespace Genetic_Algorithm
         public static Random random = new Random();
         public static QualityComparer qualityComparer = new QualityComparer();
         public static TournamentComparer tournamentComparer = new TournamentComparer();
+
+        public static Brush[] PolylineColors = { Brushes.DarkGreen, Brushes.RoyalBlue, Brushes.DarkRed, Brushes.DarkGoldenrod, Brushes.DarkOrange, Brushes.Violet, Brushes.DarkGray, Brushes.DarkMagenta, Brushes.LawnGreen, Brushes.DeepSkyBlue, Brushes.Black, Brushes.RosyBrown };
 
         public static TextBox TbConsole
         {
@@ -108,10 +114,6 @@ namespace Genetic_Algorithm
             get { return _countOfParents; }
         }
 
-        /// <summary>
-        /// 1/6 der Population sind Eltern und 5/6 sind Kinder
-        /// </summary>
-        /// <param name="PopulationSize"></param>
         public static void setCountOfParentsAndChildren(int PopulationSize)
         {
             _countOfParents = (int)Math.Round((double)PopulationSize / 6);
@@ -157,71 +159,115 @@ namespace Genetic_Algorithm
             TbConsole.ScrollToEnd();
         }
 
-        private static void findHighestOfAll(List<double> best, List<double> averages)
+        private static void findHighestOfAll(List<double> best, List<double> averages, List<List<double>> polylines)
         {
             HighestOfAverages = averages[0];
             HighestOfBest = best[0];
+            HighestOfXValues = polylines[0][0];
+            LowestOfXValues = polylines[0][0];
             for (int i = 1; i < best.Count; i++)
                 if (best[i] > HighestOfBest)
                     HighestOfBest = best[i];
             for (int i = 1; i < averages.Count; i++)
                 if (averages[i] > HighestOfAverages)
                     HighestOfAverages = averages[i];
+            for (int pl = 0; pl < polylines.Count; pl++)
+                for (int i = 0; i < polylines[pl].Count; i++)
+                {
+                    if (polylines[pl][i] > HighestOfXValues)
+                        HighestOfXValues = polylines[pl][i];
+                    if (polylines[pl][i] < LowestOfXValues)
+                        LowestOfXValues = polylines[pl][i];                    
+                }
+            if (LowestOfXValues > 0)
+                LowestOfXValues = 0;
         }
 
         private static void DrawBestOfGeneration(List<double> best)
         {
-            double ScaleX = cvGraphs.Width / (best.Count - 1);
-            for (int i = 0; i < best.Count; i++)
-            {                
-                plBestOfGenerations.Points.Add(new Point(i * ScaleX, cvGraphs.Height - cvGraphs.Height * best[i] / HighestOfBest));
-            }
+            double ScaleX = cvYGraphs.ActualWidth / (best.Count - 1);
+            for (int i = 0; i < best.Count; i++)            
+                plBestOfGenerations.Points.Add(new Point(i * ScaleX, cvYGraphs.Height - cvYGraphs.Height * best[i] / HighestOfBest));
         }
 
         private static void DrawAverageOfGeneration(List<double> averages)
         {
-            double ScaleX = cvGraphs.Width / (averages.Count - 1);
+            double ScaleX = cvYGraphs.ActualWidth / (averages.Count - 1);
 
             for (int i = 0; i < averages.Count; i++)
-                plAverageOfGenerations.Points.Add(new Point(i * ScaleX, cvGraphs.Height - cvGraphs.Height * averages[i] / HighestOfAverages));
+                plAverageOfGenerations.Points.Add(new Point(i * ScaleX, cvYGraphs.Height - cvYGraphs.Height * averages[i] / HighestOfAverages));
+        }
+
+        private static void DrawXPolylines(List<List<double>> polylines)
+        {
+            double ScaleX = cvXGraphs.ActualWidth / (polylines[0].Count - 1);
+            for (int pl = 0; pl < polylines.Count; pl++)
+            {
+                XValuePolylines.Add(new Polyline());
+                XValuePolylines[pl].Stroke = PolylineColors[pl % PolylineColors.Length];
+                for (int i = 0; i < polylines[pl].Count; i++)
+                    XValuePolylines[pl].Points.Add(new Point(i * ScaleX, cvXGraphs.Height - ((cvXGraphs.Height * (polylines[pl][i] - LowestOfXValues) / (HighestOfXValues - LowestOfXValues)))));
+            }
+            Line line = new Line();
+            line.X1 = 0;
+            line.X2 = cvXGraphs.ActualWidth;
+            line.Y1 = cvXGraphs.Height - ((cvXGraphs.Height * (0 - LowestOfXValues) / (HighestOfXValues - LowestOfXValues)));
+            line.Y2 = line.Y1;
+            line.Stroke = Brushes.Black;
+            cvXGraphs.Children.Add(line);
         }
 
         private static void DrawAxes()
         {
-            for (int i = 0; i < cvGraphs.Height / 50 - 1; i++)
+            for (int i = 0; i < cvYGraphs.Height / 50 - 1; i++)
             {
-                Label axisValueLeft = new Label();
-                axisValueLeft.Content = Math.Round(i * 50 / cvGraphs.Height * HighestOfAverages, 2);
-                cvGraphs.Children.Add(axisValueLeft);
-                axisValueLeft.Foreground = plAverageOfGenerations.Stroke;
-                axisValueLeft.Margin = new Thickness(-20, cvGraphs.Height - i * 50 - 20, 0, 0);
+                Label axisYValueLeft = new Label();
+                axisYValueLeft.Content = Math.Round(i * 50 / cvYGraphs.Height * HighestOfAverages, 2);
+                axisYValueLeft.Foreground = plAverageOfGenerations.Stroke;
+                axisYValueLeft.Margin = new Thickness(-6, cvYGraphs.Height - i * 50 - 20, 0, 0);
+                cvYGraphs.Children.Add(axisYValueLeft);
 
-                Label axisValueRight = new Label();
-                axisValueRight.Content = Math.Round(i * 50 / cvGraphs.Height * HighestOfBest, 2);
-                cvGraphs.Children.Add(axisValueRight);
-                axisValueRight.Foreground = plBestOfGenerations.Stroke;
-                axisValueRight.Margin = new Thickness(cvGraphs.Width -20, cvGraphs.Height - i * 50 - 20, 0, 0);
+                Label axisYValueRight = new Label();
+                axisYValueRight.Content = Math.Round(i * 50 / cvYGraphs.Height * HighestOfBest, 2);
+                axisYValueRight.Foreground = plBestOfGenerations.Stroke;
+                axisYValueRight.Margin = new Thickness(cvYGraphs.ActualWidth - 33, cvYGraphs.Height - i * 50 - 20, 0, 0);
+                cvYGraphs.Children.Add(axisYValueRight);
+                
             };
-            Label highestLeft = new Label();
-            highestLeft.Content = Math.Round(HighestOfAverages, 2);
-            cvGraphs.Children.Add(highestLeft);
-            highestLeft.Foreground = plAverageOfGenerations.Stroke;
-            highestLeft.Margin = new Thickness(-20, 0, 0, 0);
+            Label highestYLeft = new Label();
+            highestYLeft.Content = Math.Round(HighestOfAverages, 2);
+            highestYLeft.Foreground = plAverageOfGenerations.Stroke;
+            highestYLeft.Margin = new Thickness(-6, 0, 0, 0);
+            cvYGraphs.Children.Add(highestYLeft);
 
-            Label highestRight = new Label();
-            highestRight.Content = Math.Round(HighestOfBest, 2);
-            cvGraphs.Children.Add(highestRight);
-            highestRight.Foreground = plBestOfGenerations.Stroke;
-            highestRight.Margin = new Thickness(cvGraphs.Width -20, 0, 0, 0);
+            Label highestYRight = new Label();
+            highestYRight.Content = Math.Round(HighestOfBest, 2);
+            highestYRight.Foreground = plBestOfGenerations.Stroke;
+            highestYRight.Margin = new Thickness(cvYGraphs.ActualWidth - 33, 0, 0, 0);
+            cvYGraphs.Children.Add(highestYRight);
+            
+            for (int i = 0; i < cvXGraphs.Height / 50 - 1; i++)
+            {
+                Label axisXValue = new Label();
+                axisXValue.Content = Math.Round(i * 50 / cvXGraphs.Height * (HighestOfXValues - LowestOfXValues) + LowestOfXValues, 2);
+                axisXValue.Foreground = Brushes.Black;
+                axisXValue.Margin = new Thickness(-6, cvXGraphs.Height - i * 50 - 20, 0, 0);
+                cvXGraphs.Children.Add(axisXValue);
+            };
+            Label highestX = new Label();
+            highestX.Content = Math.Round(HighestOfXValues, 2);
+            highestX.Foreground = Brushes.Black;
+            highestX.Margin = new Thickness(-6, 0, 0, 0);
+            cvXGraphs.Children.Add(highestX);
         }
 
-        public static void DrawGraphs(List<double> best, List<double> averages)
+        public static void DrawGraphs(List<double> best, List<double> averages, List<List<double>> polylines)
         {
-            findHighestOfAll(best, averages);
-            DrawAxes();
+            findHighestOfAll(best, averages, polylines);            
             DrawBestOfGeneration(best);
             DrawAverageOfGeneration(averages);
-            
+            DrawXPolylines(polylines);
+            DrawAxes();
         }
     }
 }

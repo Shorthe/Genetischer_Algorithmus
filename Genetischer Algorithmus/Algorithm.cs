@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Windows.Shapes;
 
 namespace Genetic_Algorithm
 {
@@ -13,15 +14,23 @@ namespace Genetic_Algorithm
         private int currentGeneration;
         private List<double> bestOfGenerations;
         private List<double> averagesOfGenerations;
-
+        private List<List<double>> XValuePolylines;
 
         public void findSolution(SystemOfEquation SoE)
         {
             GlobalSettings.plBestOfGenerations.Points.Clear();
             GlobalSettings.plAverageOfGenerations.Points.Clear();
-
-            bestOfGenerations     = new List<Double>();
+            GlobalSettings.XValuePolylines.Clear();
+            bestOfGenerations = new List<Double>();
             averagesOfGenerations = new List<Double>();
+            XValuePolylines = new List<List<double>>();
+
+            for (int pl = 0; pl < GlobalSettings.NumberOfGenes; pl++)
+            {                
+                GlobalSettings.XValuePolylines.Add(new Polyline());
+                GlobalSettings.cvXGraphs.Children.Add(GlobalSettings.XValuePolylines[pl]);                
+                XValuePolylines.Add(new List<double>());
+            }
 
             parents = new List<Individual>();
             children = new List<Individual>();
@@ -47,19 +56,23 @@ namespace Genetic_Algorithm
                 parents.Sort(GlobalSettings.qualityComparer);
                 if (parents.Count > GlobalSettings.CountOfParents)
                     parents.RemoveRange(GlobalSettings.CountOfParents, parents.Count - GlobalSettings.CountOfParents);
-                selectBySelectionMethod(GlobalSettings.SelectionMethod);
+                selectBySelectionMethod(GlobalSettings.SelectionMethod);                
              
                 bestOfGenerations.Add(parents[0].Quality);
+                for (int pl = 0; pl < parents[0].gens.Count; pl++)
+                    XValuePolylines[pl].Add(parents[0].gens[pl].getValue());
+
                 GlobalSettings.ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
                 double sumOfQuality = 0;
                 for (int i = 0; i < parents.Count; i++)
                     sumOfQuality += parents[i].Quality;
+
                 averagesOfGenerations.Add(sumOfQuality / parents.Count);
 
                 children.Clear();
             }
 
-            GlobalSettings.DrawGraphs(bestOfGenerations, averagesOfGenerations);
+            GlobalSettings.DrawGraphs(bestOfGenerations, averagesOfGenerations, XValuePolylines);
 
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Beste Werte:");
