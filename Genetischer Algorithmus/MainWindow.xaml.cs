@@ -119,6 +119,8 @@ namespace Genetic_Algorithm
             {
                 throw new NotImplementedException();
             }
+            button1.IsEnabled = true;
+            button2.IsEnabled = false;
         }
 
         private void cbSystemOfEquation_SelectionChanged(object sender, SelectionChangedEventArgs e)

@@ -83,7 +83,7 @@ namespace Genetic_Algorithm
 
                 children.Clear();
 
-                if ((parents[0].Quality < 0.00000005) && (parents[0].Quality > -0.00000005))
+                if ((parents[0].Quality < 0.0000001) && (parents[0].Quality > -0.0000001))
                 {
                     GlobalSettings.ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
                     GlobalSettings.IsCancelled = true;
