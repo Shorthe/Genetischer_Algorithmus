@@ -41,8 +41,10 @@ namespace Genetic_Algorithm
                 parents[i].Quality = SoE.calculateFitness(parents[i]);
             }
 
-            for (currentGeneration = 0; currentGeneration < GlobalSettings.Generations; currentGeneration++)
+            for (currentGeneration = 0; currentGeneration < GlobalSettings.Generations; currentGeneration++)            
             {
+                if (GlobalSettings.IsCancelled)
+                    break;
                 System.Console.WriteLine("Generation " + (currentGeneration + 1));
                 recombine();
                 mutate();
@@ -63,6 +65,7 @@ namespace Genetic_Algorithm
                     XValuePolylines[pl].Add(parents[0].gens[pl].getValue());
 
                 GlobalSettings.ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
+                
                 double sumOfQuality = 0;
                 for (int i = 0; i < parents.Count; i++)
                     sumOfQuality += parents[i].Quality;
@@ -70,6 +73,9 @@ namespace Genetic_Algorithm
                 averagesOfGenerations.Add(sumOfQuality / parents.Count);
 
                 children.Clear();
+
+                if ((parents[0].Quality < 0.00000005) && (parents[0].Quality > -0.00000005))
+                    GlobalSettings.IsCancelled = true;
             }
 
             GlobalSettings.DrawGraphs(bestOfGenerations, averagesOfGenerations, XValuePolylines);

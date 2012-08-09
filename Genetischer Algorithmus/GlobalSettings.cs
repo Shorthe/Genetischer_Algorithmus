@@ -14,6 +14,7 @@ namespace Genetic_Algorithm
         private delegate void UpdateTbConsoleDelegate(System.Windows.DependencyProperty dp, Object value);
         private static UpdateTbConsoleDelegate updateTbConsoleDelegate;
         private static TextBox _tbConsole;
+        public static Boolean IsCancelled = false;
 
         public static Canvas cvYGraphs;
         public static Canvas cvXGraphs;
@@ -153,9 +154,14 @@ namespace Genetic_Algorithm
 
         public static void ConsoleAppendText(String newText)
         {
+            //TbConsole.AppendText(newText + "\n");
+            //TbConsole.InvalidateProperty(TextBox.TextProperty);
+
+            // bei allen anderen Varianten sagt er mir ungültige parameterliste, aber erst zur laufzeit... gibt 9 überladungen
             TbConsole.Dispatcher.Invoke(updateTbConsoleDelegate,
                     System.Windows.Threading.DispatcherPriority.Background,
                     new object[] { TextBox.TextProperty, TbConsole.Text + newText + "\n" });
+
             TbConsole.ScrollToEnd();
         }
 

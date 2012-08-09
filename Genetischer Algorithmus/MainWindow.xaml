@@ -5,9 +5,9 @@
     <StackPanel>
         <GroupBox Header="Parameter" Padding="10">
             <Grid>
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="611,94,0,0" Name="tbUpperBound" VerticalAlignment="Top" Width="39" Text="10" TextAlignment="Right" />
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="566,94,0,0" Name="tbLowerBound" VerticalAlignment="Top" Width="39" Text="-10" TextAlignment="Right" />
-                <Label Content="Grenzen" Height="28" HorizontalAlignment="Left" Margin="498,92,0,0" Name="label1" VerticalAlignment="Top" Width="62" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="635,95,0,0" Name="tbUpperBound" VerticalAlignment="Top" Width="39" Text="10" TextAlignment="Right" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="590,95,0,0" Name="tbLowerBound" VerticalAlignment="Top" Width="39" Text="-10" TextAlignment="Right" />
+                <Label Content="Grenzen" Height="28" HorizontalAlignment="Left" Margin="522,93,0,0" Name="label1" VerticalAlignment="Top" Width="62" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="143,67,0,0" Name="tbRecombinations" VerticalAlignment="Top" Width="39" Text="100" TextAlignment="Right" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="143,96,0,0" Name="tbMutationsMax" VerticalAlignment="Top" Width="39" Text="30" TextAlignment="Right" />
                 <TextBox FlowDirection="LeftToRight" Height="23" Margin="143,38,0,0" Name="tbGenerationSize" Text="40" VerticalAlignment="Top" HorizontalAlignment="Left" Width="39" TextAlignment="Right" />        
@@ -16,8 +16,8 @@
                 <Label Content="Rekombinationen" Height="28" HorizontalAlignment="Left" Margin="12,65,0,0" Name="label4" VerticalAlignment="Top" Width="106" />
                 <Label Content="Mutationen" Height="28" HorizontalAlignment="Left" Margin="12,94,0,0" Name="label5" VerticalAlignment="Top" Width="106" />
                 <Label Content="Generationsgröße" Height="28" HorizontalAlignment="Left" Margin="12,36,0,0" Name="label9" VerticalAlignment="Top" Width="106" />        
-                <Label Content="Gleichungssystem" Height="28" HorizontalAlignment="Left" Margin="355,9,0,0" Name="label6" VerticalAlignment="Top" Width="120" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="355,36,0,0" Name="cbSystemOfEquation" VerticalAlignment="Top" Width="120" SelectionChanged="cbSystemOfEquation_SelectionChanged">
+                <Label Content="Gleichungssystem" Height="28" HorizontalAlignment="Left" Margin="392,10,0,0" Name="label6" VerticalAlignment="Top" Width="120" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="392,37,0,0" Name="cbSystemOfEquation" VerticalAlignment="Top" Width="150" SelectionChanged="cbSystemOfEquation_SelectionChanged">
                     <ComboBoxItem Content="Standard" IsSelected="True" />
                     <ComboBoxItem Content="Griewank-Funktion" />
                     <ComboBoxItem Content="Ackley-Funktion" />
@@ -25,7 +25,7 @@
                     <ComboBoxItem Content="Nullstellenberechnung" />
                 </ComboBox>
                 <Label Content="Mutationsrate" Height="28" HorizontalAlignment="Left" Margin="213,67,0,0" Name="label7" VerticalAlignment="Top" Width="120" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="213,94,0,0" Name="cbMutationRate" VerticalAlignment="Top" Width="120">
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="213,94,0,0" Name="cbMutationRate" VerticalAlignment="Top" Width="150">
                     <ComboBoxItem Content="konstant" IsSelected="True" />
                     <ComboBoxItem Content="linear" />
                     <ComboBoxItem Content="exponentiell" />
@@ -33,16 +33,19 @@
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="87,96,0,0" Name="tbMutationsMin" Text="3" VerticalAlignment="Top" Width="39" TextAlignment="Right" />
                 <Label Content=" - " Height="28" HorizontalAlignment="Left" Margin="124,94,0,0" Name="label8" VerticalAlignment="Top" Width="19" />
                 <Label Content="Selektionsverfahren" Height="28" HorizontalAlignment="Left" Margin="213,10,0,0" Name="label10" VerticalAlignment="Top" Width="120" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="213,36,0,0" Name="cbSelection" VerticalAlignment="Top" Width="120">
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="213,36,0,0" Name="cbSelection" VerticalAlignment="Top" Width="150">
                     <ComboBoxItem Content="Deterministisch" IsSelected="True" />
                     <ComboBoxItem Content="Flaches Turnier" />
                     <ComboBoxItem Content="Stufen-Turnier" />
                 </ComboBox>
-                <Label Content="Genanzahl" Height="28" HorizontalAlignment="Left" Margin="368,92,0,0" VerticalAlignment="Top" Width="70" />
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="436,93,0,0" Name="tbNumberGenes" Text="5" VerticalAlignment="Top" Width="39" TextAlignment="Right" />
+                <Label Content="Genanzahl" Height="28" HorizontalAlignment="Left" Margin="392,93,0,0" VerticalAlignment="Top" Width="70" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="460,94,0,0" Name="tbNumberGenes" Text="5" VerticalAlignment="Top" Width="39" TextAlignment="Right" />
             </Grid>
         </GroupBox>
-        <Button Content="Algorithmus ausführen" Height="23" HorizontalAlignment="Center" Margin="5" Name="button1" VerticalAlignment="Top" Width="153" Click="button1_Click" />
+        <DockPanel VerticalAlignment="Stretch" Width="370" HorizontalAlignment="Center">
+            <Button Content="Algorithmus ausführen" Height="23" Margin="5" Name="button1" VerticalAlignment="Top" Width="153" Click="button1_Click" HorizontalContentAlignment="Center" HorizontalAlignment="Left" />
+            <Button Content="Ausführung abbrechen" Height="23" Margin="5" Name="button2" VerticalAlignment="Top" Width="153" Click="button2_Click" HorizontalContentAlignment="Center" HorizontalAlignment="Right" />
+        </DockPanel>
         <GroupBox Header="Ausgabe" HorizontalAlignment="Stretch" Padding="0,10,0,10">            
             <Grid>
                 <Grid.ColumnDefinitions>

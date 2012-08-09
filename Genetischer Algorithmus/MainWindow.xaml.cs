@@ -32,7 +32,8 @@ namespace Genetic_Algorithm
         }
 
         private void button1_Click(object sender, RoutedEventArgs e)
-        {            
+        {
+            GlobalSettings.IsCancelled = false;
             GlobalSettings.TbConsole = tbConsole;
             GlobalSettings.TbConsole.Text = "";
 
@@ -139,6 +140,11 @@ namespace Genetic_Algorithm
             else
                 tbMutationsMin.IsEnabled = true;
             
+        }
+
+        private void button2_Click(object sender, RoutedEventArgs e)
+        {
+            GlobalSettings.IsCancelled = true;
         }
     }
 }
