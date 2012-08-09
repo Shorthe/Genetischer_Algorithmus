@@ -65,7 +65,7 @@ namespace Genetic_Algorithm
                 // *** bestOfGenerations.Add(parents[0].Quality);
                 // *** for (int pl = 0; pl < parents[0].gens.Count; pl++)
                 // ***     XValuePolylines[pl].Add(parents[0].gens[pl].getValue());
-                if (currentGeneration % 100 == 0)
+                if (currentGeneration % 100 == 99 || currentGeneration == 0 || currentGeneration == GlobalSettings.Generations - 1)
                 {
                     if (currentGeneration % 10000 == 0)
                         GlobalSettings.TbConsole.Text = "";

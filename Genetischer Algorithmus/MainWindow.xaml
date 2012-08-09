@@ -5,17 +5,35 @@
     <StackPanel>
         <GroupBox Header="Parameter" Padding="10">
             <Grid>
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="635,95,0,0" Name="tbUpperBound" VerticalAlignment="Top" Width="39" Text="10" TextAlignment="Right" />
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="590,95,0,0" Name="tbLowerBound" VerticalAlignment="Top" Width="39" Text="-10" TextAlignment="Right" />
                 <Label Content="Grenzen" Height="28" HorizontalAlignment="Left" Margin="522,93,0,0" Name="label1" VerticalAlignment="Top" Width="62" />
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="143,67,0,0" Name="tbRecombinations" VerticalAlignment="Top" Width="39" Text="200" TextAlignment="Right" />
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="143,96,0,0" Name="tbMutationsMax" VerticalAlignment="Top" Width="39" Text="75" TextAlignment="Right" />
-                <TextBox FlowDirection="LeftToRight" Height="23" Margin="143,38,0,0" Name="tbGenerationSize" Text="200" VerticalAlignment="Top" HorizontalAlignment="Left" Width="39" TextAlignment="Right" />        
-                <TextBox Height="23" Margin="143,10,0,0" Name="tbGenerations" VerticalAlignment="Top" FlowDirection="LeftToRight" Text="200000" HorizontalAlignment="Left" Width="39" TextAlignment="Right" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="590,95,0,0" Name="tbLowerBound" VerticalAlignment="Top" Width="39" Text="-10" TextAlignment="Right" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="635,95,0,0" Name="tbUpperBound" VerticalAlignment="Top" Width="39" Text="10" TextAlignment="Right" />
+
                 <Label Content="Generationen" Height="28" HorizontalAlignment="Left" Margin="12,8,0,0" Name="label3" VerticalAlignment="Top" Width="106" FlowDirection="LeftToRight" HorizontalContentAlignment="Left" />
+                <TextBox Height="23" Margin="143,10,0,0" Name="tbGenerations" VerticalAlignment="Top" FlowDirection="LeftToRight" Text="200000" HorizontalAlignment="Left" Width="39" TextAlignment="Right" />
+                <Label Content="Generationsgröße" Height="28" HorizontalAlignment="Left" Margin="12,36,0,0" Name="label9" VerticalAlignment="Top" Width="106" />
+                <TextBox FlowDirection="LeftToRight" Height="23" Margin="143,38,0,0" Name="tbGenerationSize" Text="200" VerticalAlignment="Top" HorizontalAlignment="Left" Width="39" TextAlignment="Right" />
                 <Label Content="Rekombinationen" Height="28" HorizontalAlignment="Left" Margin="12,65,0,0" Name="label4" VerticalAlignment="Top" Width="106" />
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="143,67,0,0" Name="tbRecombinations" VerticalAlignment="Top" Width="39" Text="200" TextAlignment="Right" />
                 <Label Content="Mutationen" Height="28" HorizontalAlignment="Left" Margin="12,94,0,0" Name="label5" VerticalAlignment="Top" Width="106" />
-                <Label Content="Generationsgröße" Height="28" HorizontalAlignment="Left" Margin="12,36,0,0" Name="label9" VerticalAlignment="Top" Width="106" />        
+                <TextBox Height="23" Margin="87,96,604,0" Name="tbMutationsMin" Text="3" VerticalAlignment="Top" TextAlignment="Right" />
+                <Label Content=" - " Height="28" HorizontalAlignment="Left" Margin="124,94,0,0" Name="label8" VerticalAlignment="Top" Width="19" />                
+                <TextBox Height="23" HorizontalAlignment="Left" Margin="143,96,0,0" Name="tbMutationsMax" VerticalAlignment="Top" Width="39" Text="75" TextAlignment="Right" />
+
+                <Label Content="Selektionsverfahren" Height="28" HorizontalAlignment="Left" Margin="213,10,0,0" Name="label10" VerticalAlignment="Top" Width="120" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="213,36,0,0" Name="cbSelection" VerticalAlignment="Top" Width="150">
+                    <ComboBoxItem Content="Deterministisch" IsSelected="True" />
+                    <ComboBoxItem Content="Flaches Turnier" />
+                    <ComboBoxItem Content="Stufen-Turnier" />
+                </ComboBox>
+
+                <Label Content="Mutationsrate" Height="28" HorizontalAlignment="Left" Margin="213,67,0,0" Name="label7" VerticalAlignment="Top" Width="120" />
+                <ComboBox Height="23" HorizontalAlignment="Left" Margin="213,94,0,0" Name="cbMutationRate" VerticalAlignment="Top" Width="150" SelectionChanged="cbMutationRate_SelectionChanged">
+                    <ComboBoxItem Content="konstant" IsSelected="True" />
+                    <ComboBoxItem Content="linear" />
+                    <ComboBoxItem Content="exponentiell" />
+                </ComboBox>
+                
                 <Label Content="Gleichungssystem" Height="28" HorizontalAlignment="Left" Margin="392,10,0,0" Name="label6" VerticalAlignment="Top" Width="120" />
                 <ComboBox Height="23" HorizontalAlignment="Left" Margin="392,37,0,0" Name="cbSystemOfEquation" VerticalAlignment="Top" Width="150" SelectionChanged="cbSystemOfEquation_SelectionChanged" SelectedIndex="0">
                     <ComboBoxItem Content="Standard" IsSelected="True" />
@@ -24,20 +42,7 @@
                     <ComboBoxItem Content="C-Funktion" />
                     <ComboBoxItem Content="Nullstellenberechnung" />
                 </ComboBox>
-                <Label Content="Mutationsrate" Height="28" HorizontalAlignment="Left" Margin="213,67,0,0" Name="label7" VerticalAlignment="Top" Width="120" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="213,94,0,0" Name="cbMutationRate" VerticalAlignment="Top" Width="150">
-                    <ComboBoxItem Content="konstant" IsSelected="True" />
-                    <ComboBoxItem Content="linear" />
-                    <ComboBoxItem Content="exponentiell" />
-                </ComboBox>
-                <TextBox Height="23" HorizontalAlignment="Left" Margin="87,96,0,0" Name="tbMutationsMin" Text="3" VerticalAlignment="Top" Width="39" TextAlignment="Right" />
-                <Label Content=" - " Height="28" HorizontalAlignment="Left" Margin="124,94,0,0" Name="label8" VerticalAlignment="Top" Width="19" />
-                <Label Content="Selektionsverfahren" Height="28" HorizontalAlignment="Left" Margin="213,10,0,0" Name="label10" VerticalAlignment="Top" Width="120" />
-                <ComboBox Height="23" HorizontalAlignment="Left" Margin="213,36,0,0" Name="cbSelection" VerticalAlignment="Top" Width="150">
-                    <ComboBoxItem Content="Deterministisch" IsSelected="True" />
-                    <ComboBoxItem Content="Flaches Turnier" />
-                    <ComboBoxItem Content="Stufen-Turnier" />
-                </ComboBox>
+                
                 <Label Content="Genanzahl" Height="28" HorizontalAlignment="Left" Margin="392,93,0,0" VerticalAlignment="Top" Width="70" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="460,94,0,0" Name="tbNumberGenes" Text="5" VerticalAlignment="Top" Width="39" TextAlignment="Right" />
             </Grid>
