@@ -33,6 +33,8 @@ namespace Genetic_Algorithm
 
         private void button1_Click(object sender, RoutedEventArgs e)
         {
+            button1.IsEnabled = false;
+            button2.IsEnabled = true;
             GlobalSettings.IsCancelled = false;
             GlobalSettings.TbConsole = tbConsole;
             GlobalSettings.TbConsole.Text = "";
@@ -144,6 +146,8 @@ namespace Genetic_Algorithm
 
         private void button2_Click(object sender, RoutedEventArgs e)
         {
+            button1.IsEnabled = true;
+            button2.IsEnabled = false;
             GlobalSettings.IsCancelled = true;
         }
     }

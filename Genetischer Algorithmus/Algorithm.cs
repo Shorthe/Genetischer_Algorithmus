@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Windows.Shapes;
+using System.Diagnostics;
 
 namespace Genetic_Algorithm
 {
@@ -18,12 +19,14 @@ namespace Genetic_Algorithm
 
         public void findSolution(SystemOfEquation SoE)
         {
+            GlobalSettings.cvXGraphs.Children.Clear();
             GlobalSettings.plBestOfGenerations.Points.Clear();
             GlobalSettings.plAverageOfGenerations.Points.Clear();
             GlobalSettings.XValuePolylines.Clear();
             bestOfGenerations = new List<Double>();
             averagesOfGenerations = new List<Double>();
             XValuePolylines = new List<List<double>>();
+            GC.Collect();
 
             for (int pl = 0; pl < GlobalSettings.NumberOfGenes; pl++)
             {                
@@ -41,8 +44,10 @@ namespace Genetic_Algorithm
                 parents[i].Quality = SoE.calculateFitness(parents[i]);
             }
 
+            
             for (currentGeneration = 0; currentGeneration < GlobalSettings.Generations; currentGeneration++)            
             {
+                GC.Collect();
                 if (GlobalSettings.IsCancelled)
                     break;
                 System.Console.WriteLine("Generation " + (currentGeneration + 1));
@@ -58,27 +63,34 @@ namespace Genetic_Algorithm
                 parents.Sort(GlobalSettings.qualityComparer);
                 if (parents.Count > GlobalSettings.CountOfParents)
                     parents.RemoveRange(GlobalSettings.CountOfParents, parents.Count - GlobalSettings.CountOfParents);
-                selectBySelectionMethod(GlobalSettings.SelectionMethod);                
-             
-                bestOfGenerations.Add(parents[0].Quality);
-                for (int pl = 0; pl < parents[0].gens.Count; pl++)
-                    XValuePolylines[pl].Add(parents[0].gens[pl].getValue());
+                selectBySelectionMethod(GlobalSettings.SelectionMethod);
 
-                GlobalSettings.ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
-                
-                double sumOfQuality = 0;
-                for (int i = 0; i < parents.Count; i++)
-                    sumOfQuality += parents[i].Quality;
+                // *** bestOfGenerations.Add(parents[0].Quality);
+                // *** for (int pl = 0; pl < parents[0].gens.Count; pl++)
+                // ***     XValuePolylines[pl].Add(parents[0].gens[pl].getValue());
+                if (currentGeneration % 100 == 0)
+                {
+                    if (currentGeneration % 10000 == 0)
+                        GlobalSettings.TbConsole.Text = "";
+                    GlobalSettings.ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
+                }
 
-                averagesOfGenerations.Add(sumOfQuality / parents.Count);
+                // *** double sumOfQuality = 0;
+                // *** for (int i = 0; i < parents.Count; i++)
+                // ***     sumOfQuality += parents[i].Quality;
+
+                // *** averagesOfGenerations.Add(sumOfQuality / parents.Count);
 
                 children.Clear();
 
                 if ((parents[0].Quality < 0.00000005) && (parents[0].Quality > -0.00000005))
+                {
+                    GlobalSettings.ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
                     GlobalSettings.IsCancelled = true;
+                }
             }
-
-            GlobalSettings.DrawGraphs(bestOfGenerations, averagesOfGenerations, XValuePolylines);
+            
+            // *** GlobalSettings.DrawGraphs(bestOfGenerations, averagesOfGenerations, XValuePolylines);
 
             Console.WriteLine("-----------------------------------");
             Console.WriteLine("Beste Werte:");
