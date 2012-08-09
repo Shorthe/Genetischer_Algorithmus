@@ -50,14 +50,11 @@ namespace Genetic_Algorithm
                 GC.Collect();
                 if (GlobalSettings.IsCancelled)
                     break;
-                System.Console.WriteLine("Generation " + (currentGeneration + 1));
                 recombine();
                 mutate();
 
                 for (int j = 0; j < children.Count; j++)
                     children[j].Quality = SoE.calculateFitness(children[j]);
-
-                children.Sort(GlobalSettings.qualityComparer);
                 
                 // die besten x Eltern behalten
                 parents.Sort(GlobalSettings.qualityComparer);

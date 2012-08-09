@@ -10,7 +10,7 @@
                 <Label Content="Grenzen" Height="28" HorizontalAlignment="Left" Margin="522,93,0,0" Name="label1" VerticalAlignment="Top" Width="62" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="143,67,0,0" Name="tbRecombinations" VerticalAlignment="Top" Width="39" Text="200" TextAlignment="Right" />
                 <TextBox Height="23" HorizontalAlignment="Left" Margin="143,96,0,0" Name="tbMutationsMax" VerticalAlignment="Top" Width="39" Text="75" TextAlignment="Right" />
-                <TextBox FlowDirection="LeftToRight" Height="23" Margin="143,38,0,0" Name="tbGenerationSize" Text="100" VerticalAlignment="Top" HorizontalAlignment="Left" Width="39" TextAlignment="Right" />        
+                <TextBox FlowDirection="LeftToRight" Height="23" Margin="143,38,0,0" Name="tbGenerationSize" Text="200" VerticalAlignment="Top" HorizontalAlignment="Left" Width="39" TextAlignment="Right" />        
                 <TextBox Height="23" Margin="143,10,0,0" Name="tbGenerations" VerticalAlignment="Top" FlowDirection="LeftToRight" Text="200000" HorizontalAlignment="Left" Width="39" TextAlignment="Right" />
                 <Label Content="Generationen" Height="28" HorizontalAlignment="Left" Margin="12,8,0,0" Name="label3" VerticalAlignment="Top" Width="106" FlowDirection="LeftToRight" HorizontalContentAlignment="Left" />
                 <Label Content="Rekombinationen" Height="28" HorizontalAlignment="Left" Margin="12,65,0,0" Name="label4" VerticalAlignment="Top" Width="106" />
