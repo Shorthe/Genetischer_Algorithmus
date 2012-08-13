@@ -15,6 +15,9 @@ namespace Genetic_Algorithm
         private static UpdateTbConsoleDelegate updateTbConsoleDelegate;
         private static TextBox _tbConsole;
         public static Boolean IsCancelled = false;
+        public static Button btStartAlgorithm;
+        public static Button btStopAlgorithm;
+        public static int DisplayRate;
 
         public static Canvas cvYGraphs;
         public static Canvas cvXGraphs;
@@ -115,6 +118,12 @@ namespace Genetic_Algorithm
             get { return _countOfParents; }
         }
 
+        public static void activeBtStartAlgorithm()
+        {
+            btStartAlgorithm.IsEnabled = true;
+            btStopAlgorithm.IsEnabled = false;
+        }
+
         public static void setCountOfParentsAndChildren(int PopulationSize)
         {
             _countOfParents = (int)Math.Round((double)PopulationSize / 6);
@@ -150,19 +159,6 @@ namespace Genetic_Algorithm
                 return value;
             }
             else throw new Exception("Fehler bei Wahl der Mutationsrate. ( Mutationsrate = " + GlobalSettings.MutationRateType + " existiert nicht.)");
-        }
-
-        public static void ConsoleAppendText(String newText)
-        {
-            //TbConsole.AppendText(newText + "\n");
-            //TbConsole.InvalidateProperty(TextBox.TextProperty);
-
-            // bei allen anderen Varianten sagt er mir ungültige parameterliste, aber erst zur laufzeit... gibt 9 überladungen
-            TbConsole.Dispatcher.Invoke(updateTbConsoleDelegate,
-                    System.Windows.Threading.DispatcherPriority.Background,
-                    new object[] { TextBox.TextProperty, TbConsole.Text + newText + "\n" });
-
-            TbConsole.ScrollToEnd();
         }
 
         private static void findHighestOfAll(List<double> best, List<double> averages, List<List<double>> polylines)

@@ -4,6 +4,8 @@ using System.Linq;
 using System.Text;
 using System.Windows.Shapes;
 using System.Diagnostics;
+using System.Threading;
+using System.Windows.Forms;
 
 namespace Genetic_Algorithm
 {
@@ -23,17 +25,25 @@ namespace Genetic_Algorithm
             GlobalSettings.plBestOfGenerations.Points.Clear();
             GlobalSettings.plAverageOfGenerations.Points.Clear();
             GlobalSettings.XValuePolylines.Clear();
+
             bestOfGenerations = new List<Double>();
             averagesOfGenerations = new List<Double>();
             XValuePolylines = new List<List<double>>();
-            GC.Collect();
 
             for (int pl = 0; pl < GlobalSettings.NumberOfGenes; pl++)
-            {                
+            {
                 GlobalSettings.XValuePolylines.Add(new Polyline());
-                GlobalSettings.cvXGraphs.Children.Add(GlobalSettings.XValuePolylines[pl]);                
+                GlobalSettings.cvXGraphs.Children.Add(GlobalSettings.XValuePolylines[pl]);
                 XValuePolylines.Add(new List<double>());
             }
+
+            new Thread(new ParameterizedThreadStart(calculate)).Start(SoE);
+        }
+
+
+        public void calculate(Object data)
+        {
+            SystemOfEquation SoE = data as SystemOfEquation;
 
             parents = new List<Individual>();
             children = new List<Individual>();
@@ -44,10 +54,9 @@ namespace Genetic_Algorithm
                 parents[i].Quality = SoE.calculateFitness(parents[i]);
             }
 
-            
-            for (currentGeneration = 0; currentGeneration < GlobalSettings.Generations; currentGeneration++)            
+
+            for (currentGeneration = 0; currentGeneration < GlobalSettings.Generations; currentGeneration++)
             {
-                GC.Collect();
                 if (GlobalSettings.IsCancelled)
                     break;
                 recombine();
@@ -55,52 +64,93 @@ namespace Genetic_Algorithm
 
                 for (int j = 0; j < children.Count; j++)
                     children[j].Quality = SoE.calculateFitness(children[j]);
-                
+
                 // die besten x Eltern behalten
                 parents.Sort(GlobalSettings.qualityComparer);
                 if (parents.Count > GlobalSettings.CountOfParents)
                     parents.RemoveRange(GlobalSettings.CountOfParents, parents.Count - GlobalSettings.CountOfParents);
                 selectBySelectionMethod(GlobalSettings.SelectionMethod);
 
-                // *** bestOfGenerations.Add(parents[0].Quality);
-                // *** for (int pl = 0; pl < parents[0].gens.Count; pl++)
-                // ***     XValuePolylines[pl].Add(parents[0].gens[pl].getValue());
-                if (currentGeneration % 100 == 99 || currentGeneration == 0 || currentGeneration == GlobalSettings.Generations - 1)
+                bestOfGenerations.Add(parents[0].Quality);
+                for (int pl = 0; pl < parents[0].gens.Count; pl++)
+                    XValuePolylines[pl].Add(parents[0].gens[pl].getValue());
+
+                if (currentGeneration % GlobalSettings.DisplayRate == (GlobalSettings.DisplayRate - 1) || currentGeneration == 0 || currentGeneration == GlobalSettings.Generations - 1)
                 {
-                    if (currentGeneration % 10000 == 0)
-                        GlobalSettings.TbConsole.Text = "";
-                    GlobalSettings.ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
+                    //if (currentGeneration % 10000 == 0)
+                    //    ClearConsole();
+                    ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
                 }
 
-                // *** double sumOfQuality = 0;
-                // *** for (int i = 0; i < parents.Count; i++)
-                // ***     sumOfQuality += parents[i].Quality;
+                double sumOfQuality = 0;
+                for (int i = 0; i < parents.Count; i++)
+                     sumOfQuality += parents[i].Quality;
 
-                // *** averagesOfGenerations.Add(sumOfQuality / parents.Count);
+                averagesOfGenerations.Add(sumOfQuality / parents.Count);
 
                 children.Clear();
 
-                if ((parents[0].Quality < 0.0000001) && (parents[0].Quality > -0.0000001))
+                //if ((parents[0].Quality < 0.0000001) && (parents[0].Quality > -0.0000001))
+                if ((parents[0].Quality < 0.0001) && (parents[0].Quality > -0.0001))
                 {
-                    GlobalSettings.ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
+                    ConsoleAppendText(string.Format("{0,4}", (currentGeneration + 1)) + " | " + parents[0]);
                     GlobalSettings.IsCancelled = true;
                 }
             }
-            
-            // *** GlobalSettings.DrawGraphs(bestOfGenerations, averagesOfGenerations, XValuePolylines);
 
-            Console.WriteLine("-----------------------------------");
-            Console.WriteLine("Beste Werte:");
-            for (int j = 0; j < BestIndividuals.Count; j++)
-                System.Console.WriteLine(BestIndividuals[j].ToString());
+            //Graphen zeichnen
+            //Start-Button aktivieren
+            GlobalSettings.btStartAlgorithm.Dispatcher.Invoke(
+                new MethodInvoker(delegate()
+                    {
+                        GlobalSettings.DrawGraphs(bestOfGenerations, averagesOfGenerations, XValuePolylines);
+                        GlobalSettings.activeBtStartAlgorithm();
+                    }
+                )
+            );
         }
+
+        private void ConsoleAppendText(String newText)
+        {
+            //TbConsole.AppendText(newText + "\n");
+            //TbConsole.InvalidateProperty(TextBox.TextProperty);
+
+            // bei allen anderen Varianten sagt er mir ungültige parameterliste, aber erst zur laufzeit... gibt 9 überladungen
+            //GlobalSettings.TbConsole.Dispatcher.Invoke(updateTbConsoleDelegate,
+            //        System.Windows.Threading.DispatcherPriority.Background,
+            //        new object[] { TextBox.TextProperty, TbConsole.Text + newText + "\n" });
+
+            GlobalSettings.TbConsole.Dispatcher.Invoke(
+                new MethodInvoker(
+                    delegate()
+                    {
+                        GlobalSettings.TbConsole.AppendText(newText + "\n");
+                        GlobalSettings.TbConsole.ScrollToEnd();
+                    }
+                )
+            );  
+        }
+
+
+        private void ClearConsole()
+        {
+            GlobalSettings.TbConsole.Dispatcher.Invoke(
+               new MethodInvoker(
+                   delegate()
+                   {
+                       GlobalSettings.TbConsole.Clear();
+                   }
+               )
+           );
+        }
+
 
         private void recombine()
         {
             Individual parent1;
             Individual parent2;
 
-            System.Console.WriteLine("Rekombiniere " + GlobalSettings.RekombinationRate + " mal.");
+            //System.Console.WriteLine("Rekombiniere " + GlobalSettings.RekombinationRate + " mal.");
             for (int i = 0; i < GlobalSettings.RekombinationRate; i++)
             {
                 //vermeiden, dass sich gleiches Individuum rekombiniert, sonst entsteht ein Klon
@@ -116,21 +166,14 @@ namespace Genetic_Algorithm
 
         private void mutate()
         {
-            //Individual ind;
             for (int i = 0; i < GlobalSettings.getCountOfMutations(currentGeneration) ; i++)
             {
-                //ind = (Individual)parents[GlobalSettings.random.Next(parents.Count)].Clone();
-                //children.Add(Individual.mutate(ind));
-
                 children[GlobalSettings.random.Next(children.Count)].mutate();
             }
-
-            Console.WriteLine("Mutationsrate: " + GlobalSettings.getCountOfMutations(currentGeneration));
         }
 
         private void selectFlatTournament()
         {
-            //parents.Clear();
             Individual bestPlayer;
             for (int i = 0; i < GlobalSettings.CountOfChildren; i++)
             {
@@ -169,8 +212,6 @@ namespace Genetic_Algorithm
             }
             
             children.Sort(GlobalSettings.tournamentComparer);
-
-            //parents.Clear();
             parents.AddRange(children.GetRange(0, (int)Math.Min(children.Count, GlobalSettings.CountOfChildren)));
 
         }

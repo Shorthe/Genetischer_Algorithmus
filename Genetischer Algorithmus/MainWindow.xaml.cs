@@ -11,6 +11,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Threading;
 
 namespace Genetic_Algorithm
 {    
@@ -31,10 +32,13 @@ namespace Genetic_Algorithm
                 tbMutationsMin.IsEnabled = true;
         }
 
-        private void button1_Click(object sender, RoutedEventArgs e)
+        private void btStartAlgorithm_Click(object sender, RoutedEventArgs e)
         {
-            button1.IsEnabled = false;
-            button2.IsEnabled = true;
+            btStartAlgorithm.IsEnabled = false;
+            btStopAlgorithm.IsEnabled = true;
+            GlobalSettings.btStartAlgorithm = btStartAlgorithm;
+            GlobalSettings.btStopAlgorithm = btStopAlgorithm;
+
             GlobalSettings.IsCancelled = false;
             GlobalSettings.TbConsole = tbConsole;
             GlobalSettings.TbConsole.Text = "";
@@ -54,7 +58,7 @@ namespace Genetic_Algorithm
             GlobalSettings.MutationsMax = int.Parse(tbMutationsMax.Text);            
             GlobalSettings.RekombinationRate = int.Parse(tbRecombinations.Text);
             GlobalSettings.setCountOfParentsAndChildren(int.Parse(tbGenerationSize.Text));
-            
+
             //Mutationsrate
             if (cbMutationRate.SelectedIndex == 0)
                 GlobalSettings.MutationRateType = MutationRates.Constant;
@@ -64,6 +68,9 @@ namespace Genetic_Algorithm
                 GlobalSettings.MutationRateType = MutationRates.Exponential;
             else
                 throw new NotImplementedException("Die Mutationsrate " + cbMutationRate.SelectedValue + " wurde nicht implementiert!");
+
+            //Ausgaberate
+            setDisplayRate();
 
             //Selektionsverfahren
             if (cbSelection.SelectedIndex == 0)
@@ -119,8 +126,6 @@ namespace Genetic_Algorithm
             {
                 throw new NotImplementedException();
             }
-            button1.IsEnabled = true;
-            button2.IsEnabled = false;
         }
 
         private void cbSystemOfEquation_SelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -146,11 +151,31 @@ namespace Genetic_Algorithm
             
         }
 
-        private void button2_Click(object sender, RoutedEventArgs e)
+        private void btStopAlgorithm_Click(object sender, RoutedEventArgs e)
         {
-            button1.IsEnabled = true;
-            button2.IsEnabled = false;
+            btStartAlgorithm.IsEnabled = true;
+            btStopAlgorithm.IsEnabled = false;
             GlobalSettings.IsCancelled = true;
+        }
+
+        private void cbDisplayRate_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            setDisplayRate();
+        }
+
+
+        private void setDisplayRate()
+        {
+            if (cbDisplayRate.SelectedIndex == 0)
+                GlobalSettings.DisplayRate = 1;
+            else if (cbDisplayRate.SelectedIndex == 1)
+                GlobalSettings.DisplayRate = 10;
+            else if (cbDisplayRate.SelectedIndex == 2)
+                GlobalSettings.DisplayRate = 100;
+            else if (cbDisplayRate.SelectedIndex == 3)
+                GlobalSettings.DisplayRate = 1000;
+            else
+                throw new NotImplementedException("Die Anzeigerate " + cbDisplayRate.SelectedIndex + " wurde nicht implementiert!");
         }
     }
 }
