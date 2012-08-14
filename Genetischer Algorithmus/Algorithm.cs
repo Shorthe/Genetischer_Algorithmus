@@ -37,6 +37,8 @@ namespace Genetic_Algorithm
                 XValuePolylines.Add(new List<double>());
             }
 
+            GC.Collect();
+
             new Thread(new ParameterizedThreadStart(calculate)).Start(SoE);
         }
 

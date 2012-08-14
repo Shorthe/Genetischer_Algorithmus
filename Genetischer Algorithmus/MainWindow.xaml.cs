@@ -177,5 +177,11 @@ namespace Genetic_Algorithm
             else
                 throw new NotImplementedException("Die Anzeigerate " + cbDisplayRate.SelectedIndex + " wurde nicht implementiert!");
         }
+
+        private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
+        {
+            //wichtig, damit Thread beendet wird, sobald die Anwendung geschlossen wird
+            GlobalSettings.IsCancelled = true;
+        }
     }
 }
